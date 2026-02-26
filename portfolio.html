@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PORTFOLIO — FILM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --surface: #111; --border: #1e1e1e;
+      --text: #d0d0d0; --muted: #505050; --accent: #c0c0c0; --white: #f2f2f2;
+      --sans: 'Space Grotesk', sans-serif; --mono: 'Space Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px; opacity: 0.03;
+    }
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+
+    /* PROGRESS */
+    #prog { position: fixed; top: 0; left: 0; height: 1px; background: var(--accent); z-index: 9998; width: 0; transition: width .3s; }
+
+    /* HEADER */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 28px;
+      background: rgba(8,8,8,.88); backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--white); text-decoration: none; }
+    .logo span { color: var(--muted); }
+    nav { display: flex; gap: 22px; }
+    nav a { font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+    nav a:hover { color: var(--white); }
+
+    /* HERO */
+    .hero { padding: 136px 28px 72px; border-bottom: 1px solid var(--border); }
+    .eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .hero-title { font-size: clamp(38px, 11vw, 88px); font-weight: 300; letter-spacing: -.03em; line-height: 1; color: var(--white); margin-bottom: 24px; }
+    .hero-title em { font-style: italic; color: var(--muted); }
+    .hero-desc { max-width: 340px; font-size: 13px; color: var(--muted); line-height: 1.9; }
+    .hero-meta { margin-top: 40px; display: flex; gap: 32px; flex-wrap: wrap; }
+    .meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .meta-label { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+    .meta-val { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+    /* SECTION HEADER */
+    .sec-head { padding: 48px 28px 20px; display: flex; align-items: baseline; gap: 14px; }
+    .sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+    .sec-note { font-family: var(--mono); font-size: 9px; color: var(--border); }
+
+    /* GALLERY */
+    .gallery { padding: 0 28px 80px; columns: 2; column-gap: 5px; }
+    @media(max-width:420px){ .gallery { columns: 1; } }
+    @media(min-width:768px){ .gallery { columns: 3; } }
+    @media(min-width:1100px){ .gallery { columns: 4; } }
+
+    .photo-item { break-inside: avoid; margin-bottom: 5px; position: relative; overflow: hidden; cursor: pointer; background: var(--surface); }
+    .photo-item img { width: 100%; display: block; filter: grayscale(15%) contrast(1.05); transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .4s; }
+    .photo-item:hover img { transform: scale(1.04); filter: grayscale(0%) contrast(1.08); }
+    .photo-overlay { position: absolute; inset: 0; background: rgba(8,8,8,0); transition: background .4s; display: flex; align-items: flex-end; padding: 14px; }
+    .photo-item:hover .photo-overlay { background: rgba(8,8,8,.5); }
+    .photo-caption { opacity: 0; transform: translateY(5px); transition: opacity .3s, transform .3s; font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.55); }
+    .photo-item:hover .photo-caption { opacity: 1; transform: translateY(0); }
+
+    /* PLACEHOLDER */
+    .ph { width: 100%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+    .ph-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 20px; }
+    .ph-icon { width: 22px; height: 22px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .ph-icon::after { content: '+'; color: var(--muted); font-size: 13px; }
+    .ph-text { font-family: var(--mono); font-size: 8px; letter-spacing: .14em; text-transform: uppercase; color: var(--border); text-align: center; }
+
+    /* ABOUT */
+    .about { padding: 60px 28px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media(min-width:768px){ .about { grid-template-columns: 1fr 1fr; } }
+    .about-tag { display: inline-block; font-family: var(--mono); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--border); padding: 5px 12px; margin-bottom: 22px; }
+    .about-h { font-size: clamp(24px, 5vw, 40px); font-weight: 300; letter-spacing: -.02em; color: var(--white); line-height: 1.2; margin-bottom: 18px; }
+    .about-p { font-size: 13px; color: var(--muted); line-height: 1.9; max-width: 380px; }
+    .about-right { display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; }
+    .spec { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+    .spec-k { font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .spec-v { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+
+    /* CONTACT */
+    .contact { padding: 60px 28px; border-top: 1px solid var(--border); text-align: center; }
+    .ct-label { font-family: var(--mono); font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); margin-bottom: 22px; }
+    .ct-email { font-size: clamp(18px, 5vw, 38px); font-weight: 300; letter-spacing: -.02em; color: var(--white); text-decoration: none; transition: color .25s; }
+    .ct-email:hover { color: var(--muted); }
+    .ct-links { margin-top: 28px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+    .ct-link { font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color .2s; }
+    .ct-link:hover { color: var(--white); }
+
+    /* FOOTER */
+    footer { padding: 22px 28px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .ft { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; color: var(--border); }
+
+    /* LIGHTBOX */
+    #lb { position: fixed; inset: 0; background: rgba(8,8,8,.97); z-index: 9000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .3s; }
+    #lb.open { opacity: 1; pointer-events: all; }
+    #lb-img { max-width: 92vw; max-height: 88vh; object-fit: contain; filter: grayscale(10%) contrast(1.05); }
+    #lb-close { position: absolute; top: 20px; right: 24px; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); background: none; border: none; cursor: pointer; transition: color .2s; }
+    #lb-close:hover { color: var(--white); }
+    #lb-prev, #lb-next { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 10px; color: var(--muted); background: none; border: none; cursor: pointer; padding: 16px; transition: color .2s; }
+    #lb-prev:hover, #lb-next:hover { color: var(--white); }
+    #lb-prev { left: 10px; } #lb-next { right: 10px; }
+    #lb-count { position: absolute; bottom: 22px; left: 28px; font-family: var(--mono); font-size: 9px; letter-spacing: .18em; color: var(--muted); }
+
+    /* ANIM */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    .fu { opacity:0; animation: fadeUp .7s ease forwards; }
+    .d1{animation-delay:.1s} .d2{animation-delay:.22s} .d3{animation-delay:.38s} .d4{animation-delay:.54s}
+  </style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button id="lb-close">[ CLOSE ]</button>
+  <button id="lb-prev">← PREV</button>
+  <img id="lb-img" src="" alt="" />
+  <button id="lb-next">NEXT →</button>
+  <span id="lb-count"></span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#">YOUR NAME<span> — FILM</span></a>
+  <nav>
+    <a href="#works">Works</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow fu d1">Film Photography Portfolio</p>
+  <h1 class="hero-title fu d2">Captured<br/>on <em>film.</em></h1>
+  <p class="hero-desc fu d3">35mm &amp; 120 フォーマットで撮影した写真の記録。<br/>光と粒子、その瞬間だけ。</p>
+  <div class="hero-meta fu d4">
+    <div class="meta-item"><span class="meta-label">Format</span><span class="meta-val">35mm / 120</span></div>
+    <div class="meta-item"><span class="meta-label">Location</span><span class="meta-val">Tokyo, JP</span></div>
+    <div class="meta-item"><span class="meta-label">Film</span><span class="meta-val">Kodak / Fuji</span></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="works">
+  <div class="sec-head">
+    <span class="sec-label">Works</span>
+    <span class="sec-note">// &lt;img src="あなたの写真.jpg"&gt; に差し替え</span>
+  </div>
+  <div class="gallery" id="gallery">
+
+    <div class="photo-item" data-idx="0">
+      <div class="ph" style="aspect-ratio:2/3"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 01</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="1">
+      <div class="ph" style="aspect-ratio:4/3"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 02</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="2">
+      <div class="ph" style="aspect-ratio:1/1"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 03</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">120 — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="3">
+      <div class="ph" style="aspect-ratio:3/4"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 04</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="4">
+      <div class="ph" style="aspect-ratio:16/9"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 05</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="5">
+      <div class="ph" style="aspect-ratio:2/3"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 06</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">120 — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="6">
+      <div class="ph" style="aspect-ratio:1/1"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 07</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+    <div class="photo-item" data-idx="7">
+      <div class="ph" style="aspect-ratio:4/5"><div class="ph-inner"><div class="ph-icon"></div><p class="ph-text">Photo 08</p></div></div>
+      <div class="photo-overlay"><p class="photo-caption">35mm — 2025</p></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <span class="about-tag">About</span>
+    <h2 class="about-h">Film is<br/>not dead.</h2>
+    <p class="about-p">
+      ここに自己紹介を書いてください。<br/><br/>
+      フィルムで撮り続ける理由、好きな被写体、使用しているカメラやフィルムについてなど、あなた自身の言葉で語ってください。
+    </p>
+  </div>
+  <div class="about-right">
+    <div class="spec"><span class="spec-k">Camera</span><span class="spec-v">Nikon FM2</span></div>
+    <div class="spec"><span class="spec-k">Film</span><span class="spec-v">Portra 400 / HP5</span></div>
+    <div class="spec"><span class="spec-k">Format</span><span class="spec-v">35mm / 120</span></div>
+    <div class="spec"><span class="spec-k">Base</span><span class="spec-v">Tokyo, Japan</span></div>
+    <div class="spec"><span class="spec-k">Since</span><span class="spec-v">20XX</span></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="ct-label">// Get in touch</p>
+  <a class="ct-email" href="/cdn-cgi/l/email-protection#e49d8b9196a48189858d88ca878b89"><span class="__cf_email__" data-cfemail="dca5b3a9ae9cb9b1bdb5b0f2bfb3b1">[email&#160;protected]</span></a>
+  <div class="ct-links">
+    <a class="ct-link" href="#">Instagram</a>
+    <a class="ct-link" href="#">Twitter / X</a>
+    <a class="ct-link" href="#">VSCO</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="ft">© 2025 YOUR NAME</span>
+  <span class="ft">FILM PHOTOGRAPHY</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // PROGRESS BAR
+  const prog = document.getElementById('prog');
+  window.addEventListener('scroll', () => {
+    prog.style.width = (scrollY / (document.body.scrollHeight - innerHeight) * 100) + '%';
+  });
+
+  // LIGHTBOX
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+  const lbCount = document.getElementById('lb-count');
+  const items = [...document.querySelectorAll('.photo-item')];
+  let cur = 0;
+
+  function openLb(i) {
+    const img = items[i].querySelector('img');
+    if (!img) return;
+    cur = i;
+    lbImg.src = img.src;
+    lb.classList.add('open');
+    lbCount.textContent = String(cur+1).padStart(2,'0') + ' / ' + String(items.length).padStart(2,'0');
+  }
+  function closeLb() { lb.classList.remove('open'); }
+
+  items.forEach((el,i) => el.addEventListener('click', () => openLb(i)));
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if(e.target===lb) closeLb(); });
+  document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); cur=(cur-1+items.length)%items.length; openLb(cur); });
+  document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); cur=(cur+1)%items.length; openLb(cur); });
+  document.addEventListener('keydown', e => {
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLb();
+    if(e.key==='ArrowLeft') { cur=(cur-1+items.length)%items.length; openLb(cur); }
+    if(e.key==='ArrowRight') { cur=(cur+1)%items.length; openLb(cur); }
+  });
+
+  // SWIPE
+  let tx=0;
+  lb.addEventListener('touchstart', e => tx=e.changedTouches[0].clientX);
+  lb.addEventListener('touchend', e => {
+    const d = e.changedTouches[0].clientX - tx;
+    if(Math.abs(d)<40) return;
+    if(d<0){cur=(cur+1)%items.length;} else {cur=(cur-1+items.length)%items.length;}
+    openLb(cur);
+  });
+
+  // SCROLL FADE IN
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => { if(en.isIntersecting){ en.target.style.opacity='1'; en.target.style.transform='translateY(0)'; }});
+  }, {threshold:0.08});
+  document.querySelectorAll('.photo-item,.spec,.about-p').forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(14px)';
+    el.style.transition='opacity .6s ease, transform .6s ease';
+    obs.observe(el);
+  });
+</script>
+</body>
+</html>
