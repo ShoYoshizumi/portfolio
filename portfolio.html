@@ -15,6 +15,8 @@ html{scroll-behavior:smooth}
   --mono:'Space Mono',monospace;
 }
 body{background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
+
+/* ── GRAIN ── */
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E") repeat;
@@ -23,6 +25,8 @@ body::after{
 ::-webkit-scrollbar{width:1px}
 ::-webkit-scrollbar-thumb{background:var(--b)}
 #prog{position:fixed;top:0;left:0;height:1px;background:var(--w);z-index:8999;width:0;transition:width .15s}
+
+/* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:500;
   display:flex;justify-content:space-between;align-items:center;
@@ -35,6 +39,8 @@ nav{
 .nav-links{display:flex;gap:20px}
 .nav-links a{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:var(--w)}
+
+/* ── HERO ── */
 .hero{
   position:relative;height:100svh;min-height:560px;
   display:flex;align-items:flex-end;
@@ -44,12 +50,14 @@ nav{
 .hero-bg{position:absolute;inset:0;background:var(--s)}
 .hero-bg img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  /* 白黒 + 高コントラスト → ホバーでカラーに */
   filter:grayscale(100%) contrast(1.12) brightness(0.88);
   transition:filter 1.8s ease;
 }
 .hero:hover .hero-bg img{
   filter:grayscale(20%) contrast(1.06) brightness(0.92);
 }
+/* 上下グラデーション ビネット */
 .hero-vignette{
   position:absolute;inset:0;
   background:
@@ -66,6 +74,8 @@ nav{
 .hero-meta-k{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22)}
 .hero-meta-v{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.5)}
 .scroll-hint{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.18)}
+
+/* ── WORKS HEAD ── */
 .works-head{
   padding:48px 28px 22px;
   display:flex;justify-content:space-between;align-items:baseline;
@@ -73,31 +83,44 @@ nav{
 }
 .works-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
 .works-count{font-family:var(--mono);font-size:9px;color:var(--b)}
+
+/* ── GRID ── */
 .row{display:grid;border-bottom:1px solid var(--b)}
 .row-a{grid-template-columns:2fr 1fr}
 .row-c{grid-template-columns:1fr}
 .row-e{grid-template-columns:1fr 1fr}
 @media(max-width:600px){.row-a,.row-e{grid-template-columns:1fr}}
+
+/* ── CELL ── */
 .cell{
   position:relative;overflow:hidden;cursor:pointer;
   background:var(--s);border-right:1px solid var(--b);
 }
 .cell:last-child{border-right:none}
+
+/* ★ 写真スタイル: デフォルト完全B&W、タップでカラー */
 .cell img{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:grayscale(100%) contrast(1.14) brightness(0.85);
-  transition:transform .9s cubic-bezier(.25,.46,.45,.94),filter .7s ease;
+  transition:
+    transform .9s cubic-bezier(.25,.46,.45,.94),
+    filter .7s ease;
 }
-.cell:hover img,.cell.touched img{
+/* ホバー/タッチでカラー + ズーム */
+.cell:hover img, .cell.touched img{
   transform:scale(1.07);
   filter:grayscale(0%) contrast(1.08) brightness(0.97) saturate(1.1);
 }
+
+/* 各行の高さ */
 .row-a .cell{height:500px}
 .row-c .cell{height:540px}
 .row-e .cell{height:380px}
 @media(max-width:600px){
   .row-a .cell,.row-c .cell,.row-e .cell{height:280px}
 }
+
+/* セルの内側グラデーション（常時表示・薄め） */
 .cell::before{
   content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -105,6 +128,8 @@ nav{
     radial-gradient(ellipse at center, transparent 50%, rgba(5,5,5,.28) 100%);
   opacity:1;
 }
+
+/* オーバーレイ */
 .cell-ov{
   position:absolute;inset:0;z-index:2;
   background:rgba(5,5,5,0);transition:background .5s;
@@ -112,10 +137,18 @@ nav{
   padding:16px 18px;pointer-events:none;
 }
 .cell:hover .cell-ov{background:rgba(5,5,5,.3)}
-.cell-num{font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.0);transition:color .4s}
+.cell-num{
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  color:rgba(255,255,255,.0);transition:color .4s;
+}
 .cell:hover .cell-num{color:rgba(255,255,255,.45)}
-.cell-info{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.0);transition:color .4s;text-align:right}
+.cell-info{
+  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.0);transition:color .4s;text-align:right;
+}
 .cell:hover .cell-info{color:rgba(255,255,255,.45)}
+
+/* ── FEATURED バッジ ── */
 .cell.featured::after{
   content:'FEATURED';
   position:absolute;top:16px;right:16px;z-index:3;
@@ -123,6 +156,8 @@ nav{
   color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.15);
   padding:3px 8px;
 }
+
+/* ── FILM STRIP ── */
 .strip-section{border-bottom:1px solid var(--b);overflow:hidden}
 .strip-head{padding:36px 28px 18px;display:flex;justify-content:space-between;align-items:baseline}
 .strip-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
@@ -138,10 +173,11 @@ nav{
   position:relative;overflow:hidden;cursor:pointer;
   scroll-snap-align:start;background:var(--s);
 }
+/* ストリップも B&W → カラー */
 .strip-item img{
   width:100%;height:100%;object-fit:cover;
   filter:grayscale(100%) contrast(1.12) brightness(0.85);
-  transition:transform .6s ease,filter .6s ease;
+  transition:transform .6s ease, filter .6s ease;
 }
 .strip-item:hover img{
   transform:scale(1.06);
@@ -156,6 +192,8 @@ nav{
   font-family:var(--mono);font-size:8px;letter-spacing:.16em;
   color:rgba(255,255,255,.28);
 }
+
+/* ── ABOUT ── */
 .about{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--b)}
 @media(min-width:768px){.about{grid-template-columns:1fr 1fr}}
 .about-l{padding:56px 28px;border-right:1px solid var(--b)}
@@ -168,6 +206,8 @@ nav{
 .spec:first-child{border-top:1px solid var(--b)}
 .spec-k{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
 .spec-v{font-family:var(--mono);font-size:11px;color:var(--t)}
+
+/* ── CONTACT ── */
 .contact{padding:72px 28px;text-align:center;border-bottom:1px solid var(--b)}
 .ct-tag{font-family:var(--mono);font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
 .ct-email{font-size:clamp(18px,4.5vw,40px);font-weight:200;letter-spacing:-.03em;color:var(--w);text-decoration:none;transition:color .25s;display:inline-block}
@@ -177,11 +217,18 @@ nav{
 .ct-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--w);transition:width .25s}
 .ct-link:hover{color:var(--w)}
 .ct-link:hover::after{width:100%}
+
 footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .ft{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
+
+/* ── LIGHTBOX ── */
 #lb{position:fixed;inset:0;background:rgba(5,5,5,.99);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
 #lb.open{opacity:1;pointer-events:all}
-#lb-img{max-width:92vw;max-height:88vh;object-fit:contain;filter:grayscale(5%) contrast(1.06);transition:filter .5s}
+#lb-img{
+  max-width:92vw;max-height:88vh;object-fit:contain;
+  filter:grayscale(5%) contrast(1.06);
+  transition:filter .5s;
+}
 #lb.open #lb-img{filter:grayscale(5%) contrast(1.06)}
 #lb-close{position:absolute;top:18px;right:22px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s}
 #lb-close:hover{color:var(--w)}
@@ -190,6 +237,8 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 #lb-prev:hover,#lb-next:hover{color:var(--w)}
 #lb-meta{position:absolute;bottom:18px;left:0;right:0;display:flex;justify-content:center;gap:20px}
 #lb-count,#lb-cap{font-family:var(--mono);font-size:8px;letter-spacing:.18em;color:var(--dim)}
+
+/* ── REVEAL ── */
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 .fu{opacity:0;animation:fu .8s ease forwards}
 .d1{animation-delay:.1s}.d2{animation-delay:.26s}.d3{animation-delay:.44s}
@@ -197,6 +246,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 </head>
 <body>
 <div id="prog"></div>
+
 <div id="lb">
   <button id="lb-close">[ CLOSE ]</button>
   <button id="lb-prev">←</button>
@@ -204,6 +254,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   <button id="lb-next">→</button>
   <div id="lb-meta"><span id="lb-count"></span><span id="lb-cap"></span></div>
 </div>
+
 <nav>
   <a class="nav-logo" href="#">SHO YOSHIZUMI<i> — FILM</i></a>
   <div class="nav-links">
@@ -212,11 +263,13 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <a href="#contact">Contact</a>
   </div>
 </nav>
+
+<!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-bg"><img src="IMG_7352.jpeg" alt="hero"/></div>
   <div class="hero-vignette"></div>
   <div class="hero-content">
-    <p class="hero-num fu d1">001 — PORTFOLIO</p>
+    <p class="hero-num fu d1">001 — ROLLS</p>
     <h1 class="hero-title fu d2">The days,<br/><em>the record.</em></h1>
     <div class="hero-bottom fu d3">
       <div class="hero-meta">
@@ -229,11 +282,14 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     </div>
   </div>
 </section>
+
+<!-- WORKS -->
 <section id="works">
   <div class="works-head">
-    <span class="works-label">Selected Works</span>
+    <span class="works-label">Rolls</span>
     <span class="works-count">006 frames</span>
   </div>
+
   <div class="row row-a">
     <div class="cell" data-caption="35mm — 2025">
       <img src="IMG_7344.jpeg" alt="film 01"/>
@@ -244,12 +300,14 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
       <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">35mm — 2025</span></div>
     </div>
   </div>
+
   <div class="row row-c">
     <div class="cell featured" data-caption="35mm — 2025">
       <img src="IMG_7355.jpeg" alt="film 03"/>
       <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">35mm — 2025</span></div>
     </div>
   </div>
+
   <div class="row row-e">
     <div class="cell" data-caption="35mm — 2025">
       <img src="IMG_7299.jpeg" alt="film 04"/>
@@ -261,9 +319,11 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     </div>
   </div>
 </section>
+
+<!-- FILM STRIP -->
 <section class="strip-section">
   <div class="strip-head">
-    <span class="strip-label">Contact Sheet — Roll 01</span>
+    <span class="strip-label">Roll 01</span>
     <span class="strip-hint">← swipe →</span>
   </div>
   <div class="strip-track">
@@ -275,6 +335,8 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <div class="strip-item" data-caption="35mm — 2025"><img src="IMG_7355.jpeg" alt="s6"/><span class="strip-num">006</span></div>
   </div>
 </section>
+
+<!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-l">
     <span class="about-tag">About</span>
@@ -282,9 +344,13 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <p class="about-p">Born in March 1994, based in Kanagawa.<br/>Just a film camera-wielding amateur —<br/>keeping the things worth remembering.<br/><br/><span style="color:rgba(255,255,255,0.35);font-size:0.85em;">1994年3月生まれ、神奈川在住。<br/>フィルムカメラを持った素人。<br/>忘れたくないものを、ただ残している。</span></p>
   </div>
   <div class="about-r">
-    <div class="spec-list"></div>
+    <div class="spec-list">
+
+    </div>
   </div>
 </section>
+
+<!-- CONTACT -->
 <section class="contact" id="contact">
   <p class="ct-tag">// Get in touch</p>
   <a class="ct-email" id="ct-mail" href="#">yoshizumi.sho&#64;gmail.com</a>
@@ -295,17 +361,22 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <a class="ct-link" href="#">VSCO</a>
   </div>
 </section>
+
 <footer>
   <span class="ft">© 2025 SHO YOSHIZUMI</span>
   <span class="ft">FILM PHOTOGRAPHY</span>
 </footer>
+
 <script>
 const prog=document.getElementById('prog');
 window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
+
+// モバイル：タッチでカラー切り替え
 document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
   el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),800));
 });
+
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCount=document.getElementById('lb-count'),lbCap=document.getElementById('lb-cap');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
@@ -335,6 +406,7 @@ lb.addEventListener('touchend',e=>{
   if(d<0){cur=(cur+1)%items.length}else{cur=(cur-1+items.length)%items.length}
   openLb(cur);
 });
+
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(en=>{if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)'}})
 },{threshold:0.05});
