@@ -153,9 +153,27 @@ nav{
 
 /* ── FILM STRIP ── */
 .strip-section{border-bottom:1px solid var(--b);overflow:hidden}
-.strip-head{padding:36px 28px 18px;display:flex;justify-content:space-between;align-items:baseline}
-.strip-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
-.strip-hint{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
+.strip-head{
+  padding:36px 28px 16px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+.strip-head-left{display:flex;flex-direction:column;gap:6px}
+.strip-film-name{
+  font-family:var(--sans);
+  font-size:clamp(18px,4vw,28px);
+  font-weight:200;
+  letter-spacing:.04em;
+  color:var(--w);
+  line-height:1;
+}
+.strip-film-sub{
+  font-family:var(--mono);
+  font-size:8px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--dim);
+}
+.strip-hint{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b);padding-bottom:2px}
 .strip-track{
   display:flex;gap:3px;padding:0 28px 28px;
   overflow-x:auto;scroll-snap-type:x mandatory;
@@ -344,7 +362,10 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 <!-- FILM STRIP -->
 <section class="strip-section">
   <div class="strip-head">
-    <span class="strip-label">Roll 01</span>
+    <div class="strip-head-left">
+      <span class="strip-film-name">Kodak Portra 400</span>
+      <span class="strip-film-sub">35mm &middot; Spring &middot; 007 frames</span>
+    </div>
     <span class="strip-hint">← swipe →</span>
   </div>
   <div class="strip-track">
