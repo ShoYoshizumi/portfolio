@@ -50,14 +50,12 @@ nav{
 .hero-bg{position:absolute;inset:0;background:var(--s)}
 .hero-bg img{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  /* 白黒 + 高コントラスト → ホバーでカラーに */
   filter:grayscale(100%) contrast(1.12) brightness(0.88);
   transition:filter 1.8s ease;
 }
 .hero:hover .hero-bg img{
   filter:grayscale(20%) contrast(1.06) brightness(0.92);
 }
-/* 上下グラデーション ビネット */
 .hero-vignette{
   position:absolute;inset:0;
   background:
@@ -98,7 +96,6 @@ nav{
 }
 .cell:last-child{border-right:none}
 
-/* ★ 写真スタイル: デフォルト完全B&W、タップでカラー */
 .cell img{
   width:100%;height:100%;object-fit:cover;display:block;
   filter:grayscale(100%) contrast(1.14) brightness(0.85);
@@ -106,13 +103,11 @@ nav{
     transform .9s cubic-bezier(.25,.46,.45,.94),
     filter .7s ease;
 }
-/* ホバー/タッチでカラー + ズーム */
 .cell:hover img, .cell.touched img{
   transform:scale(1.07);
   filter:grayscale(0%) contrast(1.08) brightness(0.97) saturate(1.1);
 }
 
-/* 各行の高さ */
 .row-a .cell{height:500px}
 .row-c .cell{height:540px}
 .row-e .cell{height:380px}
@@ -120,7 +115,6 @@ nav{
   .row-a .cell,.row-c .cell,.row-e .cell{height:280px}
 }
 
-/* セルの内側グラデーション（常時表示・薄め） */
 .cell::before{
   content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
@@ -129,7 +123,6 @@ nav{
   opacity:1;
 }
 
-/* オーバーレイ */
 .cell-ov{
   position:absolute;inset:0;z-index:2;
   background:rgba(5,5,5,0);transition:background .5s;
@@ -148,7 +141,6 @@ nav{
 }
 .cell:hover .cell-info{color:rgba(255,255,255,.45)}
 
-/* ── FEATURED バッジ ── */
 .cell.featured::after{
   content:'FEATURED';
   position:absolute;top:16px;right:16px;z-index:3;
@@ -173,7 +165,6 @@ nav{
   position:relative;overflow:hidden;cursor:pointer;
   scroll-snap-align:start;background:var(--s);
 }
-/* ストリップも B&W → カラー */
 .strip-item img{
   width:100%;height:100%;object-fit:cover;
   filter:grayscale(100%) contrast(1.12) brightness(0.85);
@@ -213,11 +204,23 @@ nav{
 .ct-tag{font-family:var(--mono);font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
 .ct-email{font-size:clamp(18px,4.5vw,40px);font-weight:200;letter-spacing:-.03em;color:var(--w);text-decoration:none;transition:color .25s;display:inline-block}
 .ct-email:hover{color:var(--dim)}
-.ct-row{margin-top:28px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
-.ct-link{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;position:relative}
+.ct-row{margin-top:28px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center}
+.ct-link{
+  font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--dim);text-decoration:none;transition:color .2s;
+  position:relative;display:inline-flex;align-items:center;gap:8px;
+}
 .ct-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--w);transition:width .25s}
 .ct-link:hover{color:var(--w)}
 .ct-link:hover::after{width:100%}
+
+/* ── INSTAGRAM ICON ── */
+.ct-link svg{
+  width:13px;height:13px;
+  stroke:currentColor;stroke-width:1.5;fill:none;
+  stroke-linecap:round;stroke-linejoin:round;
+  flex-shrink:0;
+}
 
 footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .ft{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
@@ -353,9 +356,14 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   <a class="ct-email" id="ct-mail" href="#">yoshizumi.sho&#64;gmail.com</a>
   <script>var m=["yoshizumi.sho","gmail.com"];var el=document.getElementById("ct-mail");el.href="mailto:"+m[0]+"@"+m[1];el.textContent=m[0]+"@"+m[1];</script>
   <div class="ct-row">
-    <a class="ct-link" href="#">Instagram</a>
-    <a class="ct-link" href="#">Twitter / X</a>
-    <a class="ct-link" href="#">VSCO</a>
+    <a class="ct-link" href="https://www.instagram.com/shoyoshizumi/" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4.5"/>
+        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+      </svg>
+      Instagram
+    </a>
   </div>
 </section>
 
@@ -368,7 +376,6 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 const prog=document.getElementById('prog');
 window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
 
-// モバイル：タッチでカラー切り替え
 document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
   el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),800));
