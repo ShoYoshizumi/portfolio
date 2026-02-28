@@ -262,6 +262,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 }
 
 #lb-prev,#lb-next{
+  display:none;
   position:fixed;
   top:50%;
   transform:translateY(-50%);
@@ -279,8 +280,13 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   z-index:8001;
 }
 
-#lb-prev{left:28px}
-#lb-next{right:28px}
+#lb.open #lb-prev,
+#lb.open #lb-next{
+  display:block;
+}
+
+#lb-prev{left:8px}
+#lb-next{right:8px}
 
 #lb-prev:hover,#lb-next:hover{color:var(--w)}
 
@@ -529,7 +535,6 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
 });
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
-const lbPrev=document.getElementById('lb-prev'),lbNext=document.getElementById('lb-next');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 let scrollPos=0;
@@ -540,16 +545,12 @@ function openLb(i){
   cur=i;lbImg.src=img.src;
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
-  lbPrev.style.display='block';
-  lbNext.style.display='block';
   document.body.classList.add('lb-open');
   document.body.style.top=-scrollPos+'px';
 }
 
 function closeLb(){
   lb.classList.remove('open');
-  lbPrev.style.display='none';
-  lbNext.style.display='none';
   document.body.classList.remove('lb-open');
   document.body.style.top='';
   window.scrollTo(0,scrollPos);
@@ -558,8 +559,8 @@ function closeLb(){
 items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
 document.getElementById('lb-close').addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
-lbPrev.addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
-lbNext.addEventListener('click',e=>{e.stopPropagation();cur=(cur+1)%items.length;openLb(cur)});
+document.getElementById('lb-prev').addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
+document.getElementById('lb-next').addEventListener('click',e=>{e.stopPropagation();cur=(cur+1)%items.length;openLb(cur)});
 document.addEventListener('keydown',e=>{
   if(!lb.classList.contains('open'))return;
   if(e.key==='Escape')closeLb();
