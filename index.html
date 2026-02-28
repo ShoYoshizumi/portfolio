@@ -248,35 +248,41 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 /* ── LIGHTBOX ── */
 #lb{position:fixed;inset:0;background:rgba(5,5,5,.99);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
 #lb.open{opacity:1;pointer-events:all}
-#lb-img{
-  max-width:92vw;max-height:88vh;object-fit:contain;
-  filter:grayscale(5%) contrast(1.06);
-  transition:filter .5s;
-}
-#lb.open #lb-img{filter:grayscale(5%) contrast(1.06)}
-#lb-close{position:absolute;top:18px;right:22px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s}
-#lb-close:hover{color:var(--w)}
-#lb-prev,#lb-next{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:var(--dim);background:none;border:none;cursor:pointer;padding:22px;transition:color .2s}
-#lb-prev{left:4px}#lb-next{right:4px}
-#lb-prev:hover,#lb-next:hover{color:var(--w)}
-#lb-meta{position:absolute;bottom:18px;left:0;right:0;display:flex;justify-content:center;gap:20px;display:none}
-#lb-count,#lb-cap{font-family:var(--mono);font-size:8px;letter-spacing:.18em;color:var(--dim)}
 
-/* ── REVEAL ── */
-@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.fu{opacity:0;animation:fu .8s ease forwards}
-.d1{animation-delay:.1s}.d2{animation-delay:.26s}.d3{animation-delay:.44s}
+#lb-wrapper{position:relative;width:90vw;max-width:900px;display:flex;flex-direction:column;align-items:center}
+
+#lb-close{position:absolute;top:-30px;right:0;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s}
+#lb-close:hover{color:var(--w)}
+
+#lb-viewer{position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:30px}
+
+#lb-img{
+  max-width:100%;max-height:75vh;object-fit:contain;
+  filter:grayscale(5%) contrast(1.06);
+}
+
+#lb-prev,#lb-next{font-family:var(--mono);font-size:18px;color:var(--dim);background:none;border:none;cursor:pointer;padding:16px;transition:color .2s;flex-shrink:0}
+#lb-prev:hover,#lb-next:hover{color:var(--w)}
+
+#lb-meta{text-align:center}
+#lb-cap{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--w)}
 </style>
 </head>
 <body>
 <div id="prog"></div>
 
 <div id="lb">
-  <button id="lb-close">[ CLOSE ]</button>
-  <button id="lb-prev">←</button>
-  <img id="lb-img" src="" alt=""/>
-  <button id="lb-next">→</button>
-  <div id="lb-meta"><span id="lb-count"></span><span id="lb-cap"></span></div>
+  <div id="lb-wrapper">
+    <button id="lb-close">[ CLOSE ]</button>
+    <div id="lb-viewer">
+      <button id="lb-prev">←</button>
+      <img id="lb-img" src="" alt=""/>
+      <button id="lb-next">→</button>
+    </div>
+    <div id="lb-meta">
+      <span id="lb-cap"></span>
+    </div>
+  </div>
 </div>
 
 <nav>
@@ -501,7 +507,7 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),800));
 });
 
-const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCount=document.getElementById('lb-count'),lbCap=document.getElementById('lb-cap');
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 let scrollPos=0;
@@ -510,7 +516,6 @@ function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
   scrollPos=window.scrollY;
   cur=i;lbImg.src=img.src;
-  lbCount.textContent=String(cur+1).padStart(3,'0')+' / '+String(items.length).padStart(3,'0');
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
   document.body.classList.add('lb-open');
