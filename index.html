@@ -140,12 +140,17 @@ nav{
 }
 .cell:hover .cell-info{color:rgba(255,255,255,.45)}
 
-.cell.featured::after{
-  content:'FEATURED';
+.cell::after{
+  content:'TAP';
   position:absolute;top:16px;right:16px;z-index:3;
   font-family:var(--mono);font-size:7px;letter-spacing:.22em;
-  color:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.0);border:1px solid rgba(255,255,255,.0);
   padding:3px 8px;
+  transition:color .4s,border-color .4s;
+}
+.cell:hover::after,.cell.touched::after{
+  color:rgba(255,255,255,.45);
+  border-color:rgba(255,255,255,.25);
 }
 
 /* ── FILM STRIP ── */
