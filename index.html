@@ -504,19 +504,24 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCount=document.getElementById('lb-count'),lbCap=document.getElementById('lb-cap');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
+let scrollPos=0;
 
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
+  scrollPos=window.scrollY;
   cur=i;lbImg.src=img.src;
   lbCount.textContent=String(cur+1).padStart(3,'0')+' / '+String(items.length).padStart(3,'0');
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
   document.body.classList.add('lb-open');
+  document.body.style.top=-scrollPos+'px';
 }
 
 function closeLb(){
   lb.classList.remove('open');
   document.body.classList.remove('lb-open');
+  document.body.style.top='';
+  window.scrollTo(0,scrollPos);
 }
 
 items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
