@@ -154,23 +154,6 @@ nav{
   border-color:rgba(255,255,255,.25);
 }
 
-/* ── PAGE CONTAINER ── */
-.page-container{display:none}
-.page-container.active{display:contents}
-
-/* ── PAGINATION ── */
-.pagination{
-  display:flex;justify-content:center;align-items:center;
-  gap:12px;padding:36px 28px;border-bottom:1px solid var(--b);
-}
-.dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--dim);cursor:pointer;
-  transition:background .25s,transform .25s;
-}
-.dot:hover{transform:scale(1.25)}
-.dot.active{background:var(--w)}
-
 /* ── FILM STRIP ── */
 .strip-section{border-bottom:1px solid var(--b);overflow:hidden}
 .strip-head{
@@ -330,112 +313,96 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <span class="works-count">015 frames</span>
   </div>
 
-  <!-- PAGE 1 -->
-  <div class="page-container active" data-page="1">
-    <!-- row-c: 015 -->
-    <div class="row row-c">
-      <div class="cell" data-caption="Kodak Ultramax 400 — Autumn">
-        <img src="015.jpg" alt="film 15"/>
-        <div class="cell-ov"><span class="cell-num">015</span><span class="cell-info">Kodak Ultramax 400 — Autumn</span></div>
-      </div>
-    </div>
-
-    <!-- row-e: 014 + 013 -->
-    <div class="row row-e">
-      <div class="cell" data-caption="Kodak Ultramax 400 — Winter">
-        <img src="014.jpg" alt="film 14"/>
-        <div class="cell-ov"><span class="cell-num">014</span><span class="cell-info">Kodak Ultramax 400 — Winter</span></div>
-      </div>
-      <div class="cell" data-caption="Kodak Ultramax 400 — Spring">
-        <img src="013.jpg" alt="film 13"/>
-        <div class="cell-ov"><span class="cell-num">013</span><span class="cell-info">Kodak Ultramax 400 — Spring</span></div>
-      </div>
-    </div>
-
-    <!-- row-c: 012 -->
-    <div class="row row-c">
-      <div class="cell" data-caption="Kodak Gold 200 — Winter">
-        <img src="012.jpg" alt="film 12"/>
-        <div class="cell-ov"><span class="cell-num">012</span><span class="cell-info">Kodak Gold 200 — Winter</span></div>
-      </div>
-    </div>
-
-    <!-- row-e: 011 + 010 -->
-    <div class="row row-e">
-      <div class="cell" data-caption="Kodak Gold 200 — Spring">
-        <img src="011.jpg" alt="film 11"/>
-        <div class="cell-ov"><span class="cell-num">011</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-      </div>
-      <div class="cell" data-caption="Kodak Gold 200 — Spring">
-        <img src="010.jpg" alt="film 10"/>
-        <div class="cell-ov"><span class="cell-num">010</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-      </div>
+  <!-- row-c: 015 -->
+  <div class="row row-c">
+    <div class="cell" data-caption="Kodak Ultramax 400 — Autumn">
+      <img src="015.jpg" alt="film 15"/>
+      <div class="cell-ov"><span class="cell-num">015</span><span class="cell-info">Kodak Ultramax 400 — Autumn</span></div>
     </div>
   </div>
 
-  <!-- PAGE 2 -->
-  <div class="page-container" data-page="2">
-    <!-- row-c: 009 -->
-    <div class="row row-c">
-      <div class="cell" data-caption="Kodak Gold 200 — Spring">
-        <img src="009.jpg" alt="film 09"/>
-        <div class="cell-ov"><span class="cell-num">009</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-      </div>
+  <!-- row-e: 014 + 013 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Ultramax 400 — Winter">
+      <img src="014.jpg" alt="film 14"/>
+      <div class="cell-ov"><span class="cell-num">014</span><span class="cell-info">Kodak Ultramax 400 — Winter</span></div>
     </div>
-
-    <!-- row-e: 008 + 007 -->
-    <div class="row row-e">
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="008.jpg" alt="film 08"/>
-        <div class="cell-ov"><span class="cell-num">008</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="007.jpg" alt="film 07"/>
-        <div class="cell-ov"><span class="cell-num">007</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
-    </div>
-
-    <!-- row-c: 006 -->
-    <div class="row row-c">
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="006.jpg" alt="film 06"/>
-        <div class="cell-ov"><span class="cell-num">006</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
+    <div class="cell" data-caption="Kodak Ultramax 400 — Spring">
+      <img src="013.jpg" alt="film 13"/>
+      <div class="cell-ov"><span class="cell-num">013</span><span class="cell-info">Kodak Ultramax 400 — Spring</span></div>
     </div>
   </div>
 
-  <!-- PAGE 3 -->
-  <div class="page-container" data-page="3">
-    <!-- row-a: 005（大）+ 004（小） -->
-    <div class="row row-a">
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="005.jpg" alt="film 05"/>
-        <div class="cell-ov"><span class="cell-num">005</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="004.jpg" alt="film 04"/>
-        <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
-    </div>
-
-    <!-- row-e: 003 + 002 -->
-    <div class="row row-e">
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="003.jpg" alt="film 03"/>
-        <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
-      <div class="cell" data-caption="Kodak Portra 400 — Spring">
-        <img src="002.jpg" alt="film 02"/>
-        <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-      </div>
+  <!-- row-c: 012 -->
+  <div class="row row-c">
+    <div class="cell" data-caption="Kodak Gold 200 — Winter">
+      <img src="012.jpg" alt="film 12"/>
+      <div class="cell-ov"><span class="cell-num">012</span><span class="cell-info">Kodak Gold 200 — Winter</span></div>
     </div>
   </div>
 
-  <!-- PAGINATION -->
-  <div class="pagination">
-    <div class="dot active" data-page="1"></div>
-    <div class="dot" data-page="2"></div>
-    <div class="dot" data-page="3"></div>
+  <!-- row-b: 011（大）+ 010（小） -->
+  <div class="row row-b">
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="011.jpg" alt="film 11"/>
+      <div class="cell-ov"><span class="cell-num">011</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="010.jpg" alt="film 10"/>
+      <div class="cell-ov"><span class="cell-num">010</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-e: 009 + 008 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="009.jpg" alt="film 09"/>
+      <div class="cell-ov"><span class="cell-num">009</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="008.jpg" alt="film 08"/>
+      <div class="cell-ov"><span class="cell-num">008</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-c: 007 -->
+  <div class="row row-c">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="007.jpg" alt="film 07"/>
+      <div class="cell-ov"><span class="cell-num">007</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-a: 006（小）+ 005（大） -->
+  <div class="row row-a">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="006.jpg" alt="film 06"/>
+      <div class="cell-ov"><span class="cell-num">006</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="005.jpg" alt="film 05"/>
+      <div class="cell-ov"><span class="cell-num">005</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-e: 004 + 003 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="004.jpg" alt="film 04"/>
+      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="003.jpg" alt="film 03"/>
+      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-c: 002 -->
+  <div class="row row-c">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="002.jpg" alt="film 02"/>
+      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
   </div>
 </section>
 
@@ -534,7 +501,7 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
 });
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCount=document.getElementById('lb-count'),lbCap=document.getElementById('lb-cap');
-let items=[...document.querySelectorAll('.cell,.strip-item')];
+const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
@@ -544,11 +511,7 @@ function openLb(i){
   lb.classList.add('open');
 }
 function closeLb(){lb.classList.remove('open')}
-function updateLightbox(){
-  items=[...document.querySelectorAll('.cell,.strip-item')];
-  items.forEach((el,i)=>el.removeEventListener('click',handleCellClick));
-  items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
-}
+items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
 document.getElementById('lb-close').addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.getElementById('lb-prev').addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
@@ -567,8 +530,6 @@ lb.addEventListener('touchend',e=>{
   openLb(cur);
 });
 
-updateLightbox();
-
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(en=>{if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)'}})
 },{threshold:0.05});
@@ -576,18 +537,6 @@ document.querySelectorAll('.cell,.strip-item,.spec,.about-p,.about-h').forEach(e
   el.style.opacity='0';el.style.transform='translateY(18px)';
   el.style.transition='opacity .75s ease,transform .75s ease';
   obs.observe(el);
-});
-
-// ── PAGINATION ──
-document.querySelectorAll('.dot').forEach(dot=>{
-  dot.addEventListener('click',()=>{
-    const page=dot.dataset.page;
-    document.querySelectorAll('.page-container').forEach(c=>c.classList.remove('active'));
-    document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
-    document.querySelector(`.page-container[data-page="${page}"]`).classList.add('active');
-    dot.classList.add('active');
-    updateLightbox();
-  });
 });
 </script>
 </body>
