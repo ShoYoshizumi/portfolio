@@ -66,7 +66,7 @@ nav{
 .hero-num{font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:rgba(240,240,240,.3);margin-bottom:10px}
 .hero-title{font-size:clamp(28px,7vw,64px);font-weight:300;letter-spacing:.01em;line-height:1.2;color:var(--w);text-shadow:0 2px 40px rgba(0,0,0,.6)}
 .hero-title em{font-style:italic;color:rgba(240,240,240,.38)}
-.hero-title-shift{display:block;margin-left:0;margin-top:0.2em}
+.hero-title-shift{display:block;margin-left:clamp(40px,12vw,120px);margin-top:0.2em}
 .hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:26px;flex-wrap:wrap;gap:12px}
 .hero-meta{display:flex;gap:28px;flex-wrap:wrap}
 .hero-meta-item{display:flex;flex-direction:column;gap:3px}
@@ -80,7 +80,8 @@ nav{
   display:flex;justify-content:space-between;align-items:baseline;
   border-bottom:1px solid var(--b);
 }
-.works-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.works-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);cursor:pointer;transition:color .2s}
+.works-label:hover{color:var(--w)}
 .works-count{font-family:var(--mono);font-size:9px;color:var(--b)}
 
 /* ── GRID ── */
@@ -280,7 +281,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 <nav>
   <a class="nav-logo" href="#">SHO YOSHIZUMI<i> — FILM</i></a>
   <div class="nav-links">
-    <a href="#works">Works</a>
+    <a href="#works">ROLLS</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </div>
@@ -308,99 +309,99 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 <!-- WORKS -->
 <section id="works">
   <div class="works-head">
-    <span class="works-label">Rolls</span>
+    <span class="works-label" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">ROLLS</span>
     <span class="works-count">015 frames</span>
   </div>
 
-  <!-- row-c: 013 FEATURED (Ultramax 400) -->
+  <!-- row-c: 002 -->
   <div class="row row-c">
-    <div class="cell featured" data-caption="Kodak Ultramax 400 — Spring">
-      <img src="013.jpg" alt="film 13"/>
-      <div class="cell-ov"><span class="cell-num">013</span><span class="cell-info">Kodak Ultramax 400 — Spring</span></div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="002.jpg" alt="film 02"/>
+      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
     </div>
   </div>
 
-  <!-- row-c: 014 (Ultramax 400 Winter) -->
+  <!-- row-e: 003 + 004 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="003.jpg" alt="film 03"/>
+      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="004.jpg" alt="film 04"/>
+      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-a: 005（大）+ 006（小） -->
+  <div class="row row-a">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="005.jpg" alt="film 05"/>
+      <div class="cell-ov"><span class="cell-num">005</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="006.jpg" alt="film 06"/>
+      <div class="cell-ov"><span class="cell-num">006</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-c: 007 -->
   <div class="row row-c">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="007.jpg" alt="film 07"/>
+      <div class="cell-ov"><span class="cell-num">007</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-e: 008 + 009 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+      <img src="008.jpg" alt="film 08"/>
+      <div class="cell-ov"><span class="cell-num">008</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="009.jpg" alt="film 09"/>
+      <div class="cell-ov"><span class="cell-num">009</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-b: 010（小）+ 011（大） -->
+  <div class="row row-b">
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="010.jpg" alt="film 10"/>
+      <div class="cell-ov"><span class="cell-num">010</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+    <div class="cell" data-caption="Kodak Gold 200 — Spring">
+      <img src="011.jpg" alt="film 11"/>
+      <div class="cell-ov"><span class="cell-num">011</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
+    </div>
+  </div>
+
+  <!-- row-c: 012 -->
+  <div class="row row-c">
+    <div class="cell" data-caption="Kodak Gold 200 — Winter">
+      <img src="012.jpg" alt="film 12"/>
+      <div class="cell-ov"><span class="cell-num">012</span><span class="cell-info">Kodak Gold 200 — Winter</span></div>
+    </div>
+  </div>
+
+  <!-- row-e: 013 + 014 -->
+  <div class="row row-e">
+    <div class="cell" data-caption="Kodak Ultramax 400 — Spring">
+      <img src="013.jpg" alt="film 13"/>
+      <div class="cell-ov"><span class="cell-num">013</span><span class="cell-info">Kodak Ultramax 400 — Spring</span></div>
+    </div>
     <div class="cell" data-caption="Kodak Ultramax 400 — Winter">
       <img src="014.jpg" alt="film 14"/>
       <div class="cell-ov"><span class="cell-num">014</span><span class="cell-info">Kodak Ultramax 400 — Winter</span></div>
     </div>
   </div>
 
-  <!-- row-c: 015 (Ultramax 400 Autumn) -->
+  <!-- row-c: 015 -->
   <div class="row row-c">
     <div class="cell" data-caption="Kodak Ultramax 400 — Autumn">
       <img src="015.jpg" alt="film 15"/>
       <div class="cell-ov"><span class="cell-num">015</span><span class="cell-info">Kodak Ultramax 400 — Autumn</span></div>
-    </div>
-  </div>
-
-  <!-- row-a: 002（大）+ 003（小） -->
-  <div class="row row-a">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="002.jpg" alt="film 02"/>
-      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="003.jpg" alt="film 03"/>
-      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-b: 004（小）+ 005（大） -->
-  <div class="row row-b">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="004.jpg" alt="film 04"/>
-      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="005.jpg" alt="film 05"/>
-      <div class="cell-ov"><span class="cell-num">005</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-c: 006 FEATURED -->
-  <div class="row row-c">
-    <div class="cell featured" data-caption="Kodak Portra 400 — Spring">
-      <img src="006.jpg" alt="film 06"/>
-      <div class="cell-ov"><span class="cell-num">006</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-e: 007 + 008 -->
-  <div class="row row-e">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="007.jpg" alt="film 07"/>
-      <div class="cell-ov"><span class="cell-num">007</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="008.jpg" alt="film 08"/>
-      <div class="cell-ov"><span class="cell-num">008</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-e: 009 + 010 -->
-  <div class="row row-e">
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="009.jpg" alt="film 09"/>
-      <div class="cell-ov"><span class="cell-num">009</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="010.jpg" alt="film 10"/>
-      <div class="cell-ov"><span class="cell-num">010</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-b: 011（大）+ 012（小） -->
-  <div class="row row-b">
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="011.jpg" alt="film 11"/>
-      <div class="cell-ov"><span class="cell-num">011</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Gold 200 — Winter">
-      <img src="012.jpg" alt="film 12"/>
-      <div class="cell-ov"><span class="cell-num">012</span><span class="cell-info">Kodak Gold 200 — Winter</span></div>
     </div>
   </div>
 </section>
