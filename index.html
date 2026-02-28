@@ -156,19 +156,19 @@ nav{
 
 /* ── PAGE CONTAINER ── */
 .page-container{display:none}
-.page-container.active{display:block}
+.page-container.active{display:contents}
 
 /* ── PAGINATION ── */
 .pagination{
   display:flex;justify-content:center;align-items:center;
-  gap:16px;padding:36px 28px;border-bottom:1px solid var(--b);
+  gap:12px;padding:36px 28px;border-bottom:1px solid var(--b);
 }
 .dot{
-  width:10px;height:10px;border-radius:50%;
+  width:8px;height:8px;border-radius:50%;
   background:var(--dim);cursor:pointer;
   transition:background .25s,transform .25s;
 }
-.dot:hover{transform:scale(1.2)}
+.dot:hover{transform:scale(1.25)}
 .dot.active{background:var(--w)}
 
 /* ── FILM STRIP ── */
@@ -258,22 +258,8 @@ nav{
   flex-shrink:0;
 }
 
-footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center}
+footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .ft{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
-
-/* ── COPY BUTTON ── */
-#copy-btn{
-  font-family:var(--mono);
-  font-size:8px;
-  letter-spacing:.14em;
-  color:var(--b);
-  background:none;
-  border:none;
-  cursor:pointer;
-  transition:color .2s;
-  padding:0;
-}
-#copy-btn:hover{color:var(--w)}
 
 /* ── LIGHTBOX ── */
 #lb{position:fixed;inset:0;background:rgba(5,5,5,.99);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s}
@@ -536,7 +522,6 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 <footer>
   <span class="ft">© 2025 SHO YOSHIZUMI</span>
   <span class="ft">FILM PHOTOGRAPHY</span>
-  <button id="copy-btn">COPY URL</button>
 </footer>
 
 <script>
@@ -549,7 +534,7 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
 });
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCount=document.getElementById('lb-count'),lbCap=document.getElementById('lb-cap');
-const items=[...document.querySelectorAll('.cell,.strip-item')];
+let items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
@@ -559,7 +544,11 @@ function openLb(i){
   lb.classList.add('open');
 }
 function closeLb(){lb.classList.remove('open')}
-items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
+function updateLightbox(){
+  items=[...document.querySelectorAll('.cell,.strip-item')];
+  items.forEach((el,i)=>el.removeEventListener('click',handleCellClick));
+  items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
+}
 document.getElementById('lb-close').addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.getElementById('lb-prev').addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
@@ -578,6 +567,8 @@ lb.addEventListener('touchend',e=>{
   openLb(cur);
 });
 
+updateLightbox();
+
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(en=>{if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)'}})
 },{threshold:0.05});
@@ -587,19 +578,17 @@ document.querySelectorAll('.cell,.strip-item,.spec,.about-p,.about-h').forEach(e
   obs.observe(el);
 });
 
-document.getElementById('copy-btn').addEventListener('click',()=>{
-  const url=window.location.href;
-  navigator.clipboard.writeText(url).then(()=>{
-    const btn=document.getElementById('copy-btn');
-    const orig=btn.textContent;
-    btn.textContent='COPIED!';
-    setTimeout(()=>{btn.textContent=orig},2000);
-  });
-});
-
 // ── PAGINATION ──
 document.querySelectorAll('.dot').forEach(dot=>{
   dot.addEventListener('click',()=>{
     const page=dot.dataset.page;
     document.querySelectorAll('.page-container').forEach(c=>c.classList.remove('active'));
-    document.querySelectorAll('.dot').forEach(d=>d.classList
+    document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
+    document.querySelector(`.page-container[data-page="${page}"]`).classList.add('active');
+    dot.classList.add('active');
+    updateLightbox();
+  });
+});
+</script>
+</body>
+</html>
