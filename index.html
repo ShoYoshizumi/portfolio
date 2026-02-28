@@ -262,24 +262,25 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 }
 
 #lb-prev,#lb-next{
-  position:absolute;
+  position:fixed;
   top:50%;
   transform:translateY(-50%);
   font-family:var(--mono);
-  font-size:13px;
+  font-size:14px;
   letter-spacing:.14em;
   color:var(--t);
   background:none;
   border:none;
   cursor:pointer;
-  padding:10px 14px;
+  padding:12px 16px;
   transition:color .2s;
   text-transform:uppercase;
   font-weight:bold;
+  z-index:8001;
 }
 
-#lb-prev{left:12px}
-#lb-next{right:12px}
+#lb-prev{left:28px}
+#lb-next{right:28px}
 
 #lb-prev:hover,#lb-next:hover{color:var(--w)}
 
@@ -294,15 +295,16 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   <div id="lb-wrapper">
     <button id="lb-close">[ CLOSE ]</button>
     <div id="lb-viewer">
-      <button id="lb-prev">←</button>
       <img id="lb-img" src="" alt=""/>
-      <button id="lb-next">→</button>
     </div>
     <div id="lb-meta">
       <span id="lb-cap"></span>
     </div>
   </div>
 </div>
+
+<button id="lb-prev">←</button>
+<button id="lb-next">→</button>
 
 <nav>
   <a class="nav-logo" href="#">SHO YOSHIZUMI<i> — FILM</i></a>
@@ -527,6 +529,7 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
 });
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
+const lbPrev=document.getElementById('lb-prev'),lbNext=document.getElementById('lb-next');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 let scrollPos=0;
@@ -537,12 +540,16 @@ function openLb(i){
   cur=i;lbImg.src=img.src;
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
+  lbPrev.style.display='block';
+  lbNext.style.display='block';
   document.body.classList.add('lb-open');
   document.body.style.top=-scrollPos+'px';
 }
 
 function closeLb(){
   lb.classList.remove('open');
+  lbPrev.style.display='none';
+  lbNext.style.display='none';
   document.body.classList.remove('lb-open');
   document.body.style.top='';
   window.scrollTo(0,scrollPos);
@@ -551,8 +558,8 @@ function closeLb(){
 items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
 document.getElementById('lb-close').addEventListener('click',closeLb);
 lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
-document.getElementById('lb-prev').addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
-document.getElementById('lb-next').addEventListener('click',e=>{e.stopPropagation();cur=(cur+1)%items.length;openLb(cur)});
+lbPrev.addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;openLb(cur)});
+lbNext.addEventListener('click',e=>{e.stopPropagation();cur=(cur+1)%items.length;openLb(cur)});
 document.addEventListener('keydown',e=>{
   if(!lb.classList.contains('open'))return;
   if(e.key==='Escape')closeLb();
