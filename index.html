@@ -544,7 +544,7 @@ function getScrollPosForItem(idx) {
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
   cur=i;
-  scrollPos=getScrollPosForItem(cur); // ← 開く時点での位置を保存
+  scrollPos=getScrollPosForItem(cur);
   lbImg.src=img.src;
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
@@ -559,7 +559,7 @@ function closeLb(){
   document.body.classList.remove('lb-open');
   document.body.style.top='';
   requestAnimationFrame(() => {
-    scrollPos = getScrollPosForItem(cur); // ← 閉じる時点での現在の写真位置を再計算
+    scrollPos = getScrollPosForItem(cur);
     window.scrollTo(0, scrollPos);
   });
 }
