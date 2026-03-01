@@ -533,12 +533,18 @@ const items=[...document.querySelectorAll('.cell,.strip-item')];
 let cur=0;
 let scrollPos=0;
 let isSwiping=false;
-let photoPositions={}; // 各写真のスクロール位置を記録
+
+// ← 重要：各アイテムのスクロール位置を計算する関数
+function getScrollPosForItem(idx) {
+  const item = items[idx];
+  const rect = item.getBoundingClientRect();
+  const itemScrollPos = window.scrollY + rect.top - 80; // ナビゲーション分のオフセット
+  return Math.max(0, itemScrollPos);
+}
 
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
-  scrollPos=window.scrollY;
-  photoPositions[i]=scrollPos; // このインデックスのスクロール位置を保存
+  scrollPos=getScrollPosForItem(i); // ← 各アイテムの位置を計算して保存
   cur=i;lbImg.src=img.src;
   lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
@@ -567,8 +573,7 @@ document.getElementById('lb-prev').addEventListener('click',e=>{
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
   lbCap.textContent=items[cur].dataset.caption||'';
-  // 次のインデックスのスクロール位置を更新
-  scrollPos=photoPositions[cur]||window.scrollY;
+  scrollPos=getScrollPosForItem(cur); // ← スワイプで新しい位置を計算
 });
 
 document.getElementById('lb-next').addEventListener('click',e=>{
@@ -577,8 +582,7 @@ document.getElementById('lb-next').addEventListener('click',e=>{
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
   lbCap.textContent=items[cur].dataset.caption||'';
-  // 次のインデックスのスクロール位置を更新
-  scrollPos=photoPositions[cur]||window.scrollY;
+  scrollPos=getScrollPosForItem(cur); // ← スワイプで新しい位置を計算
 });
 
 document.addEventListener('keydown',e=>{
@@ -589,14 +593,14 @@ document.addEventListener('keydown',e=>{
     const img=items[cur].querySelector('img');
     lbImg.src=img.src;
     lbCap.textContent=items[cur].dataset.caption||'';
-    scrollPos=photoPositions[cur]||window.scrollY;
+    scrollPos=getScrollPosForItem(cur);
   }
   if(e.key==='ArrowRight'){
     cur=(cur+1)%items.length;
     const img=items[cur].querySelector('img');
     lbImg.src=img.src;
     lbCap.textContent=items[cur].dataset.caption||'';
-    scrollPos=photoPositions[cur]||window.scrollY;
+    scrollPos=getScrollPosForItem(cur);
   }
 });
 
@@ -609,8 +613,7 @@ lb.addEventListener('touchend',e=>{
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
   lbCap.textContent=items[cur].dataset.caption||'';
-  // スワイプで画像を変えた後、そのインデックスのスクロール位置を更新
-  scrollPos=photoPositions[cur]||window.scrollY;
+  scrollPos=getScrollPosForItem(cur); // ← スワイプで新しい位置を計算
   setTimeout(()=>{isSwiping=false;},300);
 });
 
