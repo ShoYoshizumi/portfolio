@@ -47,6 +47,7 @@ nav{
   display:flex;align-items:flex-end;
   padding:0 28px 48px;overflow:hidden;
   border-bottom:1px solid var(--b);
+  cursor:pointer;
 }
 .hero-bg{position:absolute;inset:0;background:var(--s)}
 .hero-bg img{
@@ -54,7 +55,7 @@ nav{
   filter:grayscale(100%) contrast(1.12) brightness(0.88);
   transition:filter 1.8s ease;
 }
-.hero:hover .hero-bg img, .hero:active .hero-bg img{
+.hero:hover .hero-bg img, .hero.hero-active .hero-bg img{
   filter:grayscale(20%) contrast(1.06) brightness(0.92);
 }
 .hero-vignette{
@@ -107,7 +108,7 @@ nav{
 }
 .cell:hover img, .cell.touched img, .cell:active img{
   transform:scale(1.07);
-  filter:grayscale(0%) contrast(1.08) brightness(0.97) saturate(1.1);
+  filter:grayscale(0%) contrast(1.08) brightness(0.96) saturate(1.1);
 }
 
 .row-a .cell{height:500px}
@@ -524,6 +525,17 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
   el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),800));
 });
+
+// ← ヒーロー写真の Safari タップ対応
+const hero = document.querySelector('.hero');
+hero.addEventListener('touchstart', () => {
+  hero.classList.add('hero-active');
+}, {passive:true});
+hero.addEventListener('touchend', () => {
+  setTimeout(() => {
+    hero.classList.remove('hero-active');
+  }, 1800);
+}, {passive:true});
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
 const items=[...document.querySelectorAll('.cell,.strip-item')];
