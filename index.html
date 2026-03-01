@@ -546,7 +546,9 @@ function closeLb(){
   lb.classList.remove('open');
   document.body.classList.remove('lb-open');
   document.body.style.top='';
-  window.scrollTo(0,scrollPos);
+  requestAnimationFrame(() => {
+    window.scrollTo(0, scrollPos);
+  });
 }
 
 items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
