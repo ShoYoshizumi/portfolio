@@ -521,9 +521,25 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 const prog=document.getElementById('prog');
 window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
 
+let previousTouched = null;
+let previousTimeout = null;
+
 document.querySelectorAll('.cell,.strip-item').forEach(el=>{
-  el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
-  el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),1800));
+  el.addEventListener('touchstart',()=>{
+    // 前の touched を削除（モノクロに戻す）
+    if(previousTouched && previousTouched !== el) {
+      clearTimeout(previousTimeout);
+      previousTouched.classList.remove('touched');
+    }
+    el.classList.add('touched');
+    previousTouched = el;
+  },{passive:true});
+  el.addEventListener('touchend',()=>{
+    clearTimeout(previousTimeout);
+    previousTimeout = setTimeout(()=>{
+      el.classList.remove('touched');
+    }, 1800);
+  });
 });
 
 // ← ヒーロー写真の Safari タップ対応
