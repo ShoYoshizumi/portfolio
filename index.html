@@ -6,583 +6,341 @@
 <title>The days, the record. — SHO YOSHIZUMI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-:root{
-  --bg:#050505;--s:#0c0c0c;--b:#181818;
-  --t:#b8b8b8;--dim:#363636;--w:#eeeeee;
-  --sans:'Cormorant Garamond',serif;
-  --mono:'Space Mono',monospace;
-}
-body{background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden}
-body.lb-open{overflow:hidden;position:fixed;width:100%;top:0}
+:root{--bg:#050505;--s:#0c0c0c;--b:#181818;--t:#b8b8b8;--dim:#363636;--w:#eeeeee;--sans:'Cormorant Garamond',serif;--mono:'Space Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--t);font-family:var(--sans);overflow-x:hidden;line-height:1.6;}
+body.lb-open{overflow:hidden;position:fixed;width:100%;top:0;}
+html{scroll-behavior:auto;}
 
-/* ── GRAIN ── */
-body::after{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9000;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E") repeat;
-  background-size:200px;opacity:.032;
-}
-::-webkit-scrollbar{width:1px}
-::-webkit-scrollbar-thumb{background:var(--b)}
-#prog{position:fixed;top:0;left:0;height:1px;background:var(--w);z-index:8999;width:0;transition:width .15s}
+/* スクロールバー */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--t);border-radius:2px;}
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:500;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:18px 28px;
-  background:rgba(5,5,5,.88);backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--b);
-}
-.nav-logo{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--w);text-decoration:none}
-.nav-logo i{font-style:normal;color:var(--dim)}
-.nav-links{display:flex;gap:20px}
-.nav-links a{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--w)}
+/* プログレスバー */
+#prog{position:fixed;top:0;left:0;height:1px;background:var(--w);width:0%;z-index:9999;transition:width .1s linear;}
 
-/* ── HERO ── */
-.hero{
-  position:relative;height:100svh;min-height:560px;
-  display:flex;align-items:flex-end;
-  padding:0 28px 48px;overflow:hidden;
-  border-bottom:1px solid var(--b);
-}
-.hero-bg{position:absolute;inset:0;background:var(--s)}
-.hero-bg img{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  filter:grayscale(100%) contrast(1.12) brightness(0.88);
-  transition:filter 1.8s ease;
-}
-.hero:hover .hero-bg img{
-  filter:grayscale(20%) contrast(1.06) brightness(0.92);
-}
-.hero-vignette{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom, rgba(5,5,5,.65) 0%, transparent 25%, transparent 40%, rgba(5,5,5,.92) 75%, rgba(5,5,5,.98) 100%),
-    radial-gradient(ellipse at center, transparent 40%, rgba(5,5,5,.45) 100%);
-}
-.hero-content{position:relative;z-index:2;width:100%}
-.hero-num{font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:rgba(240,240,240,.3);margin-bottom:10px}
-.hero-title{font-size:clamp(28px,7vw,64px);font-weight:300;letter-spacing:.01em;line-height:1.2;color:var(--w);text-shadow:0 2px 40px rgba(0,0,0,.6)}
-.hero-title em{font-style:italic;color:rgba(240,240,240,.38)}
-.hero-title-shift{display:block;margin-left:clamp(40px,12vw,120px);margin-top:0.2em}
-.hero-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:26px;flex-wrap:wrap;gap:12px}
-.hero-meta{display:flex;gap:28px;flex-wrap:wrap}
-.hero-meta-item{display:flex;flex-direction:column;gap:3px}
-.hero-meta-k{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.22)}
-.hero-meta-v{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.5)}
-.scroll-hint{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.18)}
+/* グレーン効果 */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");background-size:200px 200px;z-index:1;}
 
-/* ── WORKS HEAD ── */
-.works-head{
-  padding:48px 28px 22px;
-  display:flex;justify-content:space-between;align-items:baseline;
-  border-bottom:1px solid var(--b);
-}
-.works-label{font-family:var(--mono);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);cursor:pointer;transition:color .2s}
-.works-label:hover{color:var(--w)}
-.works-count{font-family:var(--mono);font-size:9px;color:var(--b)}
+/* ナビゲーション */
+nav{position:fixed;top:0;left:0;right:0;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;z-index:999;background:linear-gradient(to bottom,rgba(5,5,5,0.6),transparent);font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;}
+nav a{color:var(--t);text-decoration:none;transition:color .2s;margin:0 16px;}
+nav a:hover{color:var(--w);}
 
-/* ── GRID ── */
-.row{display:grid;border-bottom:1px solid var(--b)}
-.row-a{grid-template-columns:2fr 1fr}
-.row-b{grid-template-columns:1fr 2fr}
-.row-c{grid-template-columns:1fr}
-.row-e{grid-template-columns:1fr 1fr}
-@media(max-width:600px){.row-a,.row-b,.row-e{grid-template-columns:1fr}}
+/* ライトボックス */
+#lb{display:none;position:fixed;inset:0;background:rgba(5,5,5,0.98);z-index:8000;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
+#lb.open{display:flex;opacity:1;pointer-events:all;}
+#lb-wrapper{position:relative;width:90%;max-width:800px;display:flex;flex-direction:column;align-items:center;}
+#lb-viewer{position:relative;width:100%;display:flex;align-items:center;justify-content:center;}
+#lb-img{max-width:100%;max-height:60vh;object-fit:contain;display:block;}
+#lb-prev,#lb-next{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:14px;font-weight:bold;color:var(--t);background:none;border:none;cursor:pointer;padding:12px 16px;transition:color .2s;z-index:8001;}
+#lb-prev{left:12px;}
+#lb-next{right:12px;}
+#lb-prev:hover,#lb-next:hover{color:var(--w);}
+#lb-close{position:absolute;top:-40px;right:0;font-family:var(--mono);font-size:11px;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s;letter-spacing:.1em;text-transform:uppercase;}
+#lb-close:hover{color:var(--t);}
+#lb-meta{margin-top:24px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;}
 
-/* ── CELL ── */
-.cell{
-  position:relative;overflow:hidden;cursor:pointer;
-  background:var(--s);border-right:1px solid var(--b);
-}
-.cell:last-child{border-right:none}
+/* ヒーローセクション */
+.hero{position:relative;width:100%;height:100vh;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-top:0;}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,5,5,0.2) 0%,rgba(200,200,200,0.05) 100%);pointer-events:none;}
+.hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.7) contrast(1.1);}
+.hero-text{position:absolute;text-align:center;color:var(--w);z-index:10;}
+.hero-text h1{font-size:64px;font-weight:200;letter-spacing:0.05em;margin-bottom:16px;}
+.hero-text p{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;}
 
-.cell img{
-  width:100%;height:100%;object-fit:cover;display:block;
-  filter:grayscale(100%) contrast(1.14) brightness(0.85);
-  transition:
-    transform .9s cubic-bezier(.25,.46,.45,.94),
-    filter .7s ease;
-}
-.cell:hover img, .cell.touched img{
-  transform:scale(1.07);
-  filter:grayscale(0%) contrast(1.08) brightness(0.97) saturate(1.1);
-}
+/* 作品セクション */
+.works-head{padding:80px 28px 40px;text-align:center;}
+.works-head h2{font-size:32px;font-weight:300;margin-bottom:12px;letter-spacing:0.02em;}
+.works-head p{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;}
 
-.row-a .cell{height:500px}
-.row-b .cell{height:500px}
-.row-c .cell{height:540px}
-.row-e .cell{height:380px}
-@media(max-width:600px){
-  .row-a .cell,.row-b .cell,.row-c .cell,.row-e .cell{height:280px}
-}
+/* グリッドレイアウト */
+.works{padding:0 28px 80px;}
+.row-a,.row-b,.row-c,.row-e{display:grid;gap:16px;margin-bottom:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+.row-a{grid-template-columns:2fr 1fr;}
+.row-b{grid-template-columns:1fr 2fr;}
+.row-c{grid-template-columns:repeat(3,1fr);}
+.row-e{grid-template-columns:1fr 1fr;}
 
-.cell::before{
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    linear-gradient(to bottom, transparent 60%, rgba(5,5,5,.55) 100%),
-    radial-gradient(ellipse at center, transparent 50%, rgba(5,5,5,.28) 100%);
-  opacity:1;
-}
+.cell{position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;background:var(--b);border:1px solid var(--b);transition:transform .3s,border-color .3s;}
+.cell img{width:100%;height:100%;object-fit:cover;filter:brightness(1) saturate(1);transition:filter .3s,transform .3s;}
+.cell:hover img{filter:brightness(0.8) saturate(1.2);transform:scale(1.05);}
+.cell:active{transform:scale(0.98);}
 
-.cell-ov{
-  position:absolute;inset:0;z-index:2;
-  background:rgba(5,5,5,0);transition:background .5s;
-  display:flex;align-items:flex-end;justify-content:space-between;
-  padding:16px 18px;pointer-events:none;
-}
-.cell:hover .cell-ov{background:rgba(5,5,5,.3)}
-.cell-num{display:none}
-.cell-info{
-  font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,255,255,.0);transition:color .4s;text-align:right;
-}
-.cell:hover .cell-info{color:rgba(255,255,255,.45)}
+/* フィルムストリップ */
+.strip{padding:60px 28px;background:var(--s);}
+.strip h3{font-size:24px;font-weight:300;margin-bottom:32px;letter-spacing:0.02em;}
+.strip-items{display:grid;grid-template-columns:repeat(auto-scroll,minmax(150px,1fr));gap:12px;overflow-x:auto;padding-bottom:12px;}
+.strip-item{aspect-ratio:1;background:var(--b);border:1px solid var(--b);overflow:hidden;cursor:pointer;transition:transform .3s;}
+.strip-item img{width:100%;height:100%;object-fit:cover;filter:brightness(0.9);transition:filter .3s,transform .3s;}
+.strip-item:hover img{filter:brightness(0.7);transform:scale(1.05);}
 
-.cell::after{
-  content:'TAP';
-  position:absolute;top:16px;right:16px;z-index:3;
-  font-family:var(--mono);font-size:7px;letter-spacing:.22em;
-  color:rgba(255,255,255,.0);border:1px solid rgba(255,255,255,.0);
-  padding:3px 8px;
-  transition:color .4s,border-color .4s;
-}
-.cell:hover::after,.cell.touched::after{
-  color:rgba(255,255,255,.45);
-  border-color:rgba(255,255,255,.25);
-}
+/* About & Contact */
+.about{padding:80px 28px;max-width:800px;}
+.about h2{font-size:28px;font-weight:300;margin-bottom:24px;}
+.about p{margin-bottom:16px;line-height:1.8;font-size:14px;}
 
-/* ── FILM STRIP ── */
-.strip-section{border-bottom:1px solid var(--b);overflow:hidden}
-.strip-head{
-  padding:36px 28px 16px;
-  display:flex;justify-content:space-between;align-items:flex-end;
-}
-.strip-head-left{display:flex;flex-direction:column;gap:6px}
-.strip-film-name{
-  font-family:var(--sans);
-  font-size:clamp(18px,4vw,28px);
-  font-weight:200;
-  letter-spacing:.04em;
-  color:var(--w);
-  line-height:1;
-}
-.strip-film-sub{
-  font-family:var(--mono);
-  font-size:8px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--dim);
-}
-.strip-hint{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b);padding-bottom:2px}
-.strip-track{
-  display:flex;gap:3px;padding:0 28px 28px;
-  overflow-x:auto;scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;scrollbar-width:none;
-}
-.strip-track::-webkit-scrollbar{display:none}
-.strip-item{
-  flex:0 0 auto;width:clamp(160px,36vw,280px);height:190px;
-  position:relative;overflow:hidden;cursor:pointer;
-  scroll-snap-align:start;background:var(--s);
-}
-.strip-item img{
-  width:100%;height:100%;object-fit:cover;
-  filter:grayscale(100%) contrast(1.12) brightness(0.85);
-  transition:transform .6s ease, filter .6s ease;
-}
-.strip-item:hover img{
-  transform:scale(1.06);
-  filter:grayscale(0%) contrast(1.08) brightness(0.96) saturate(1.1);
-}
-.strip-item::before{
-  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(to bottom, transparent 55%, rgba(5,5,5,.6) 100%);
-}
-.strip-num{display:none}
+.contact{padding:80px 28px;text-align:center;}
+.contact h2{font-size:28px;font-weight:300;margin-bottom:32px;}
+.contact a{color:var(--t);text-decoration:none;font-family:var(--mono);font-size:12px;letter-spacing:.1em;transition:color .2s;display:inline-block;margin:8px 16px;}
+.contact a:hover{color:var(--w);}
 
-/* ── ABOUT ── */
-.about{display:block;border-bottom:1px solid var(--b);padding:56px 28px;text-align:center}
-.about-l{padding:0}
-.about-r{padding:0}
-.about-tag{font-family:var(--mono);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);border:1px solid var(--b);padding:4px 10px;display:inline-block;margin-bottom:24px}
-.about-h{font-size:clamp(26px,6vw,50px);font-weight:200;letter-spacing:-.03em;color:var(--w);line-height:1.05;margin-bottom:32px}
-.about-photo{width:100%;max-width:280px;margin:0 auto 32px;aspect-ratio:4/3;overflow:hidden}
-.about-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(20%) contrast(1.05) brightness(0.92)}
-.about-p{font-size:13px;color:var(--dim);line-height:2;max-width:480px;margin:0 auto;text-align:center}
-.spec-list{display:flex;flex-direction:column}
-.spec{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--b)}
-.spec:first-child{border-top:1px solid var(--b)}
-.spec-k{font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.spec-v{font-family:var(--mono);font-size:11px;color:var(--t)}
-
-/* ── CONTACT ── */
-.contact{padding:72px 28px;text-align:center;border-bottom:1px solid var(--b)}
-.ct-tag{font-family:var(--mono);font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
-.ct-email{font-size:clamp(18px,4.5vw,40px);font-weight:200;letter-spacing:-.03em;color:var(--w);text-decoration:none;transition:color .25s;display:inline-block}
-.ct-email:hover{color:var(--dim)}
-.ct-row{margin-top:28px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center}
-.ct-link{
-  font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--dim);text-decoration:none;transition:color .2s;
-  position:relative;display:inline-flex;align-items:center;gap:8px;
-}
-.ct-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--w);transition:width .25s}
-.ct-link:hover{color:var(--w)}
-.ct-link:hover::after{width:100%}
-
-/* ── INSTAGRAM ICON ── */
-.ct-link svg{
-  width:13px;height:13px;
-  stroke:currentColor;stroke-width:1.5;fill:none;
-  stroke-linecap:round;stroke-linejoin:round;
-  flex-shrink:0;
-}
-
-footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.ft{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
-
-/* ── LIGHTBOX ── */
-#lb{position:fixed;inset:0;background:rgba(5,5,5,.99);z-index:8000;display:none;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .4s;padding:40px 20px}
-#lb.open{display:flex;opacity:1;pointer-events:all}
-
-#lb-wrapper{position:relative;width:100%;max-width:85vw;display:flex;flex-direction:column;align-items:center}
-
-#lb-close{position:absolute;top:-30px;right:0;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);background:none;border:none;cursor:pointer;transition:color .2s}
-#lb-close:hover{color:var(--w)}
-
-#lb-viewer{position:relative;width:100%;display:flex;align-items:center;justify-content:center;margin-bottom:28px}
-
-#lb-img{
-  max-width:100%;max-height:55vh;object-fit:contain;
-  filter:grayscale(5%) contrast(1.06);
-}
-
-#lb-prev,#lb-next{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  font-family:var(--mono);
-  font-size:14px;
-  letter-spacing:.14em;
-  color:var(--t);
-  background:none;
-  border:none;
-  cursor:pointer;
-  padding:12px 16px;
-  transition:color .2s;
-  text-transform:uppercase;
-  font-weight:bold;
-  z-index:100;
-}
-
-#lb-prev{left:12px}
-#lb-next{right:12px}
-
-#lb-prev:hover,#lb-next:hover{color:var(--w)}
-
-#lb-meta{text-align:center}
-#lb-cap{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+/* フッター */
+footer{padding:40px 28px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--dim);border-top:1px solid var(--b);letter-spacing:.1em;}
 </style>
 </head>
 <body>
-<div id="prog"></div>
 
+<!-- ライトボックス -->
 <div id="lb">
-  <button id="lb-prev">←</button>
-  <button id="lb-next">→</button>
   <div id="lb-wrapper">
     <button id="lb-close">[ CLOSE ]</button>
     <div id="lb-viewer">
+      <button id="lb-prev">←</button>
       <img id="lb-img" src="" alt=""/>
+      <button id="lb-next">→</button>
     </div>
-    <div id="lb-meta">
-      <span id="lb-cap"></span>
-    </div>
+    <div id="lb-meta"><span id="lb-cap"></span></div>
   </div>
 </div>
 
+<!-- ナビゲーション -->
 <nav>
-  <a class="nav-logo" href="#">SHO YOSHIZUMI<i> — FILM</i></a>
-  <div class="nav-links">
-    <a href="#works">ROLLS</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+  <div style="font-weight:bold;">SHO YOSHIZUMI</div>
+  <div style="display:flex;">
+    <a href="#works">WORKS</a>
+    <a href="#about">ABOUT</a>
+    <a href="#contact">CONTACT</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero" id="top">
-  <div class="hero-bg"><img src="013.jpg" alt="hero"/></div>
-  <div class="hero-vignette"></div>
-  <div class="hero-content">
-    <p class="hero-num fu d1" style="display:none">001 — ROLLS</p>
-    <h1 class="hero-title fu d2">The days,<br/><em class="hero-title-shift">the record.</em></h1>
-    <div class="hero-bottom fu d3">
-      <div class="hero-meta">
-        <div class="hero-meta-item"><span class="hero-meta-k">Camera</span><span class="hero-meta-v">Nikon F2</span></div>
-        <div class="hero-meta-item"><span class="hero-meta-k">Format</span><span class="hero-meta-v">35mm</span></div>
-        <div class="hero-meta-item"><span class="hero-meta-k">Location</span><span class="hero-meta-v">Somewhere</span></div>
-        <div class="hero-meta-item"><span class="hero-meta-k">Film</span><span class="hero-meta-v">Kodak, sometimes Fuji</span></div>
-      </div>
-      <span class="scroll-hint">scroll ↓</span>
-    </div>
+<!-- ヒーロー -->
+<section class="hero">
+  <img src="https://via.placeholder.com/1920x1080?text=Hero+Image" alt="Hero"/>
+  <div class="hero-text">
+    <h1>The days, the record.</h1>
+    <p>Photography & Visual Stories</p>
   </div>
 </section>
 
-<!-- WORKS -->
-<section id="works">
-  <div class="works-head">
-    <span class="works-label" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">ROLLS</span>
-    <span class="works-count">015 frames</span>
-  </div>
+<!-- 作品セクション -->
+<section class="works-head" id="works">
+  <h2>Works</h2>
+  <p>Selected Projects</p>
+</section>
 
-  <!-- row-c: 015 -->
-  <div class="row row-c">
-    <div class="cell" data-caption="Kodak Ultramax 400 — Autumn">
-      <img src="015.jpg" alt="film 15"/>
-      <div class="cell-ov"><span class="cell-num">015</span><span class="cell-info">Kodak Ultramax 400 — Autumn</span></div>
-    </div>
+<section class="works">
+  <div class="row-a">
+    <div class="cell" data-caption="Project 001"><img src="https://via.placeholder.com/600x400?text=001" alt="001"/></div>
+    <div class="cell" data-caption="Project 002"><img src="https://via.placeholder.com/300x400?text=002" alt="002"/></div>
   </div>
-
-  <!-- row-e: 014 + 013 -->
-  <div class="row row-e">
-    <div class="cell" data-caption="Kodak Ultramax 400 — Winter">
-      <img src="014.jpg" alt="film 14"/>
-      <div class="cell-ov"><span class="cell-num">014</span><span class="cell-info">Kodak Ultramax 400 — Winter</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Ultramax 400 — Spring">
-      <img src="013.jpg" alt="film 13"/>
-      <div class="cell-ov"><span class="cell-num">013</span><span class="cell-info">Kodak Ultramax 400 — Spring</span></div>
-    </div>
+  <div class="row-b">
+    <div class="cell" data-caption="Project 003"><img src="https://via.placeholder.com/300x400?text=003" alt="003"/></div>
+    <div class="cell" data-caption="Project 004"><img src="https://via.placeholder.com/600x400?text=004" alt="004"/></div>
   </div>
-
-  <!-- row-c: 012 -->
-  <div class="row row-c">
-    <div class="cell" data-caption="Kodak Gold 200 — Winter">
-      <img src="012.jpg" alt="film 12"/>
-      <div class="cell-ov"><span class="cell-num">012</span><span class="cell-info">Kodak Gold 200 — Winter</span></div>
-    </div>
-  </div>
-
-  <!-- row-b: 011（大）+ 010（小） -->
-  <div class="row row-b">
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="011.jpg" alt="film 11"/>
-      <div class="cell-ov"><span class="cell-num">011</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="010.jpg" alt="film 10"/>
-      <div class="cell-ov"><span class="cell-num">010</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-e: 009 + 008 -->
-  <div class="row row-e">
-    <div class="cell" data-caption="Kodak Gold 200 — Spring">
-      <img src="009.jpg" alt="film 09"/>
-      <div class="cell-ov"><span class="cell-num">009</span><span class="cell-info">Kodak Gold 200 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="008.jpg" alt="film 08"/>
-      <div class="cell-ov"><span class="cell-num">008</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-c: 007 -->
-  <div class="row row-c">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="007.jpg" alt="film 07"/>
-      <div class="cell-ov"><span class="cell-num">007</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-a: 006（小）+ 005（大） -->
-  <div class="row row-a">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="006.jpg" alt="film 06"/>
-      <div class="cell-ov"><span class="cell-num">006</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="005.jpg" alt="film 05"/>
-      <div class="cell-ov"><span class="cell-num">005</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-e: 004 + 003 -->
-  <div class="row row-e">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="004.jpg" alt="film 04"/>
-      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="003.jpg" alt="film 03"/>
-      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
-  </div>
-
-  <!-- row-c: 002 -->
-  <div class="row row-c">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
-      <img src="002.jpg" alt="film 02"/>
-      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
-    </div>
+  <div class="row-c">
+    <div class="cell" data-caption="Project 005"><img src="https://via.placeholder.com/300x300?text=005" alt="005"/></div>
+    <div class="cell" data-caption="Project 006"><img src="https://via.placeholder.com/300x300?text=006" alt="006"/></div>
+    <div class="cell" data-caption="Project 007"><img src="https://via.placeholder.com/300x300?text=007" alt="007"/></div>
   </div>
 </section>
 
-<!-- FILM STRIP: Ultramax 400 -->
-<section class="strip-section">
-  <div class="strip-head">
-    <div class="strip-head-left">
-      <span class="strip-film-name">Kodak Ultramax 400</span>
-      <span class="strip-film-sub">35mm &middot; 003 frames</span>
-    </div>
-    <span class="strip-hint">← swipe →</span>
-  </div>
-  <div class="strip-track">
-    <div class="strip-item" data-caption="Kodak Ultramax 400 — Autumn"><img src="015.jpg" alt="s15"/><span class="strip-num">015</span></div>
-    <div class="strip-item" data-caption="Kodak Ultramax 400 — Winter"><img src="014.jpg" alt="s14"/><span class="strip-num">014</span></div>
-    <div class="strip-item" data-caption="Kodak Ultramax 400 — Spring"><img src="013.jpg" alt="s13"/><span class="strip-num">013</span></div>
+<!-- フィルムストリップ -->
+<section class="strip">
+  <h3>Recent</h3>
+  <div class="strip-items">
+    <div class="strip-item" data-caption="Strip 001"><img src="https://via.placeholder.com/200x200?text=S001" alt="S001"/></div>
+    <div class="strip-item" data-caption="Strip 002"><img src="https://via.placeholder.com/200x200?text=S002" alt="S002"/></div>
+    <div class="strip-item" data-caption="Strip 003"><img src="https://via.placeholder.com/200x200?text=S003" alt="S003"/></div>
+    <div class="strip-item" data-caption="Strip 004"><img src="https://via.placeholder.com/200x200?text=S004" alt="S004"/></div>
+    <div class="strip-item" data-caption="Strip 005"><img src="https://via.placeholder.com/200x200?text=S005" alt="S005"/></div>
   </div>
 </section>
 
-<!-- FILM STRIP -->
-<section class="strip-section">
-  <div class="strip-head">
-    <div class="strip-head-left">
-      <span class="strip-film-name">Kodak Portra 400</span>
-      <span class="strip-film-sub">35mm &middot; 007 frames</span>
-    </div>
-    <span class="strip-hint">← swipe →</span>
-  </div>
-  <div class="strip-track">
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="008.jpg" alt="s8"/><span class="strip-num">008</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="007.jpg" alt="s7"/><span class="strip-num">007</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="006.jpg" alt="s6"/><span class="strip-num">006</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="005.jpg" alt="s5"/><span class="strip-num">005</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="004.jpg" alt="s4"/><span class="strip-num">004</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="003.jpg" alt="s3"/><span class="strip-num">003</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="002.jpg" alt="s2"/><span class="strip-num">002</span></div>
-  </div>
-</section>
-
-<!-- FILM STRIP: Gold 200 -->
-<section class="strip-section">
-  <div class="strip-head">
-    <div class="strip-head-left">
-      <span class="strip-film-name">Kodak Gold 200</span>
-      <span class="strip-film-sub">35mm &middot; 004 frames</span>
-    </div>
-    <span class="strip-hint">← swipe →</span>
-  </div>
-  <div class="strip-track">
-    <div class="strip-item" data-caption="Kodak Gold 200 — Winter"><img src="012.jpg" alt="s12"/><span class="strip-num">012</span></div>
-    <div class="strip-item" data-caption="Kodak Gold 200 — Spring"><img src="011.jpg" alt="s11"/><span class="strip-num">011</span></div>
-    <div class="strip-item" data-caption="Kodak Gold 200 — Spring"><img src="010.jpg" alt="s10"/><span class="strip-num">010</span></div>
-    <div class="strip-item" data-caption="Kodak Gold 200 — Spring"><img src="009.jpg" alt="s9"/><span class="strip-num">009</span></div>
-  </div>
-</section>
-
-<!-- ABOUT -->
+<!-- About -->
 <section class="about" id="about">
-  <span class="about-tag">About</span>
-  <h2 class="about-h">Days in grain.</h2>
-  <div class="about-photo">
-    <img src="about.JPG" alt="Sho Yoshizumi"/>
-  </div>
-  <p class="about-p">Born in March 1994, based in Kanagawa.<br/>Just a film camera-wielding amateur —<br/>keeping the things worth remembering.<br/><br/><span style="color:rgba(255,255,255,0.35);font-size:0.85em;">1994年3月生まれ、神奈川在住。<br/>フィルムカメラを持った素人。<br/>忘れたくないものを、ただ残している。</span></p>
+  <h2>About</h2>
+  <p>Photographer and visual storyteller based in Tokyo. Focusing on documentary and conceptual photography that captures the essence of human experience.</p>
+  <p>With over 10 years of experience, my work has been featured in various publications and exhibitions across Asia and Europe.</p>
 </section>
 
-<!-- CONTACT -->
+<!-- Contact -->
 <section class="contact" id="contact">
-  <p class="ct-tag">// Get in touch</p>
-  <a class="ct-email" id="ct-mail" href="#">yoshizumi.sho&#64;gmail.com</a>
-  <script>var m=["yoshizumi.sho","gmail.com"];var el=document.getElementById("ct-mail");el.href="mailto:"+m[0]+"@"+m[1];el.textContent=m[0]+"@"+m[1];</script>
-  <div class="ct-row">
-    <a class="ct-link" href="https://www.instagram.com/shoyoshizumi/" target="_blank" rel="noopener noreferrer">
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4.5"/>
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-      </svg>
-      Instagram
-    </a>
-  </div>
+  <h2>Contact</h2>
+  <p style="font-family:var(--mono);font-size:10px;color:var(--dim);margin-bottom:24px;">Get in touch for commissions and inquiries</p>
+  <a href="mailto:info@example.com">EMAIL</a>
+  <a href="https://instagram.com" target="_blank">INSTAGRAM</a>
+  <a href="https://twitter.com" target="_blank">TWITTER</a>
 </section>
 
+<!-- フッター -->
 <footer>
-  <span class="ft">© 2025 SHO YOSHIZUMI</span>
-  <span class="ft">FILM PHOTOGRAPHY</span>
+  © 2024 SHO YOSHIZUMI. All rights reserved.
 </footer>
 
 <script>
-const prog=document.getElementById('prog');
-window.addEventListener('scroll',()=>{prog.style.width=(scrollY/(document.body.scrollHeight-innerHeight)*100)+'%'});
-
-document.querySelectorAll('.cell,.strip-item').forEach(el=>{
-  el.addEventListener('touchstart',()=>el.classList.add('touched'),{passive:true});
-  el.addEventListener('touchend',()=>setTimeout(()=>el.classList.remove('touched'),800));
+// プログレスバー
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const scrollHeight = document.body.scrollHeight - window.innerHeight;
+  const scrolled = window.scrollY;
+  prog.style.width = (scrolled / scrollHeight * 100) + '%';
 });
 
-const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
-const items=[...document.querySelectorAll('.cell,.strip-item')];
-let cur=0;
-let scrollPos=0;
-let isSwiping=false;
+// ライトボックス変数
+const lb = document.getElementById('lb');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-cap');
+const lbPrev = document.getElementById('lb-prev');
+const lbNext = document.getElementById('lb-next');
+const lbClose = document.getElementById('lb-close');
 
-function openLb(i){
-  const img=items[i].querySelector('img');if(!img)return;
-  scrollPos=window.scrollY;
-  cur=i;lbImg.src=img.src;
-  lbCap.textContent=items[i].dataset.caption||'';
+// アイテム集約
+const items = [...document.querySelectorAll('.cell'), ...document.querySelectorAll('.strip-item')];
+
+// 各写真のスクロール位置を記録
+let photoPositions = {};
+let cur = 0;
+let scrollPos = 0;
+let isSwiping = false;
+let touchStart = 0;
+
+// 写真をクリックで開く
+items.forEach((item, idx) => {
+  item.addEventListener('click', () => {
+    // まだこの写真のスクロール位置がなければ、その位置を記録
+    if (!(idx in photoPositions)) {
+      photoPositions[idx] = item.getBoundingClientRect().top + window.scrollY - 100;
+    }
+    openLb(idx);
+  });
+});
+
+// ライトボックスを開く
+function openLb(idx) {
+  const img = items[idx].querySelector('img');
+  if (!img) return;
+
+  cur = idx;
+  scrollPos = photoPositions[idx] || window.scrollY;
+  lbImg.src = img.src;
+  lbCap.textContent = items[idx].dataset.caption || '';
+
   lb.classList.add('open');
   document.body.classList.add('lb-open');
-  document.body.style.top=-scrollPos+'px';
-  isSwiping=false;
+  document.body.style.top = -scrollPos + 'px';
+  
+  isSwiping = false;
 }
 
-function closeLb(){
-  if(isSwiping)return;
+// ライトボックスを閉じる
+function closeLb() {
+  if (isSwiping) return;
+
   lb.classList.remove('open');
   document.body.classList.remove('lb-open');
-  document.body.style.top='';
+  document.body.style.top = '';
+
   requestAnimationFrame(() => {
     window.scrollTo(0, scrollPos);
   });
 }
 
-items.forEach((el,i)=>el.addEventListener('click',()=>openLb(i)));
-document.getElementById('lb-close').addEventListener('click',closeLb);
-lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
-document.getElementById('lb-prev').addEventListener('click',e=>{e.stopPropagation();cur=(cur-1+items.length)%items.length;const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';});
-document.getElementById('lb-next').addEventListener('click',e=>{e.stopPropagation();cur=(cur+1)%items.length;const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';});
-document.addEventListener('keydown',e=>{
-  if(!lb.classList.contains('open'))return;
-  if(e.key==='Escape')closeLb();
-  if(e.key==='ArrowLeft'){cur=(cur-1+items.length)%items.length;const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';}
-  if(e.key==='ArrowRight'){cur=(cur+1)%items.length;const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';}
-});
-let tx=0;
-lb.addEventListener('touchstart',e=>tx=e.changedTouches[0].clientX,{passive:true});
-lb.addEventListener('touchend',e=>{
-  const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)<40)return;
-  isSwiping=true;
-  if(d<0){cur=(cur+1)%items.length}else{cur=(cur-1+items.length)%items.length}
-  const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';
-  setTimeout(()=>{isSwiping=false;},300);
+// 前の写真へ
+function goToPrev() {
+  cur = (cur - 1 + items.length) % items.length;
+  const img = items[cur].querySelector('img');
+  lbImg.src = img.src;
+  lbCap.textContent = items[cur].dataset.caption || '';
+}
+
+// 次の写真へ
+function goToNext() {
+  cur = (cur + 1) % items.length;
+  const img = items[cur].querySelector('img');
+  lbImg.src = img.src;
+  lbCap.textContent = items[cur].dataset.caption || '';
+}
+
+// クローズボタン
+lbClose.addEventListener('click', closeLb);
+
+// 矢印ボタン
+lbPrev.addEventListener('click', (e) => {
+  e.stopPropagation();
+  goToPrev();
 });
 
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(en=>{if(en.isIntersecting){en.target.style.opacity='1';en.target.style.transform='translateY(0)'}})
-},{threshold:0.05});
-document.querySelectorAll('.cell,.strip-item,.spec,.about-p,.about-h').forEach(el=>{
-  el.style.opacity='0';el.style.transform='translateY(18px)';
-  el.style.transition='opacity .75s ease,transform .75s ease';
-  obs.observe(el);
+lbNext.addEventListener('click', (e) => {
+  e.stopPropagation();
+  goToNext();
+});
+
+// ライトボックス背景をクリックで閉じる
+lb.addEventListener('click', (e) => {
+  if (e.target === lb) closeLb();
+});
+
+// キーボード操作
+document.addEventListener('keydown', (e) => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') goToPrev();
+  if (e.key === 'ArrowRight') goToNext();
+  if (e.key === 'Escape') closeLb();
+});
+
+// タッチスワイプ
+lb.addEventListener('touchstart', (e) => {
+  touchStart = e.touches[0].clientX;
+});
+
+lb.addEventListener('touchend', (e) => {
+  const touchEnd = e.changedTouches[0].clientX;
+  const diff = touchStart - touchEnd;
+
+  if (Math.abs(diff) < 40) return; // 小さなドラッグは無視
+
+  isSwiping = true;
+
+  if (diff > 0) {
+    // 左スワイプ → 次の写真
+    goToNext();
+  } else {
+    // 右スワイプ → 前の写真
+    goToPrev();
+  }
+
+  setTimeout(() => {
+    isSwiping = false;
+  }, 300);
+});
+
+// セルのタッチフィードバック
+items.forEach(item => {
+  item.addEventListener('touchstart', () => {
+    item.style.opacity = '0.8';
+  });
+  item.addEventListener('touchend', () => {
+    item.style.opacity = '1';
+  });
+});
+
+// IntersectionObserver でフェードイン
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+items.forEach(item => {
+  item.style.opacity = '0.7';
+  observer.observe(item);
 });
 </script>
+
 </body>
 </html>
