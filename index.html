@@ -572,7 +572,6 @@ lb.addEventListener('touchend',e=>{
   isSwiping=true;
   if(d<0){cur=(cur+1)%items.length}else{cur=(cur-1+items.length)%items.length}
   const img=items[cur].querySelector('img');lbImg.src=img.src;lbCap.textContent=items[cur].dataset.caption||'';
-  scrollPos=window.scrollY;
   setTimeout(()=>{isSwiping=false;},300);
 });
 
