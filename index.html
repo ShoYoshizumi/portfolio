@@ -219,27 +219,69 @@ nav{
 .spec-v{font-family:var(--mono);font-size:11px;color:var(--t)}
 
 /* ── CONTACT ── */
-.contact{padding:72px 28px;text-align:center;border-bottom:1px solid var(--b)}
-.ct-tag{font-family:var(--mono);font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);margin-bottom:20px}
-.ct-email{font-size:clamp(18px,4.5vw,40px);font-weight:200;letter-spacing:-.03em;color:var(--w);text-decoration:none;transition:color .25s;display:inline-block}
-.ct-email:hover{color:var(--dim)}
-.ct-row{margin-top:28px;display:flex;justify-content:center;gap:28px;flex-wrap:wrap;align-items:center}
-.ct-link{
-  font-family:var(--mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--dim);text-decoration:none;transition:color .2s;
-  position:relative;display:inline-flex;align-items:center;gap:8px;
+.contact{padding:96px 28px;text-align:center;border-bottom:1px solid var(--b);background:linear-gradient(135deg,rgba(240,240,240,.01) 0%,rgba(240,240,240,.0) 100%)}
+.ct-tag{font-family:var(--mono);font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:32px;font-weight:400}
+.ct-email{
+  font-size:clamp(20px,5vw,44px);
+  font-weight:200;
+  letter-spacing:-.02em;
+  color:var(--w);
+  text-decoration:none;
+  transition:all .3s ease;
+  display:inline-block;
+  position:relative;
+  padding:16px 32px;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:2px;
 }
-.ct-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--w);transition:width .25s}
+.ct-email:hover{
+  color:var(--w);
+  border-color:rgba(255,255,255,.4);
+  box-shadow:0 8px 32px rgba(240,240,240,.08);
+  transform:translateY(-2px);
+}
+.ct-row{margin-top:40px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap;align-items:center}
+.ct-link{
+  font-family:var(--mono);
+  font-size:8px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.38);
+  text-decoration:none;
+  transition:all .2s ease;
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 0;
+}
+.ct-link::before{
+  content:'';
+  position:absolute;
+  bottom:-6px;
+  left:0;
+  width:0;
+  height:1px;
+  background:var(--w);
+  transition:width .3s ease;
+}
+.ct-link::after{display:none}
 .ct-link:hover{color:var(--w)}
-.ct-link:hover::after{width:100%}
+.ct-link:hover::before{width:100%}
 
 /* ── INSTAGRAM ICON ── */
 .ct-link svg{
-  width:13px;height:13px;
-  stroke:currentColor;stroke-width:1.5;fill:none;
-  stroke-linecap:round;stroke-linejoin:round;
+  width:14px;
+  height:14px;
+  stroke:currentColor;
+  stroke-width:1.4;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
   flex-shrink:0;
+  transition:transform .2s ease;
 }
+.ct-link:hover svg{transform:scale(1.08)}
 
 footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .ft{font-family:var(--mono);font-size:8px;letter-spacing:.14em;color:var(--b)}
@@ -526,7 +568,6 @@ let previousTimeout = null;
 
 document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   el.addEventListener('touchstart',()=>{
-    // 前の touched を削除（モノクロに戻す）
     if(previousTouched && previousTouched !== el) {
       clearTimeout(previousTimeout);
       previousTouched.classList.remove('touched');
@@ -542,7 +583,6 @@ document.querySelectorAll('.cell,.strip-item').forEach(el=>{
   });
 });
 
-// ← ヒーロー写真の Safari タップ対応
 const hero = document.querySelector('.hero');
 hero.addEventListener('touchstart', () => {
   hero.classList.add('hero-active');
