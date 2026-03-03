@@ -140,7 +140,7 @@ nav{
 .cell-num{display:none}
 .cell-info{
   font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,255,255,.0);transition:color .4s;text-align:right;
+  color:rgba(255,255,255,.0);transition:color .4s;text-align:right;white-space:pre-wrap;
 }
 .cell:hover .cell-info{color:rgba(255,255,255,.45)}
 
@@ -336,6 +336,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   text-transform:uppercase;
   color:var(--dim);
   line-height:1.8;
+  white-space:pre-wrap;
 }
 </style>
 </head>
@@ -464,29 +465,39 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 
   <!-- row-e: 004 + 003 -->
   <div class="row row-e">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring
+午後の光が彼を選んだ瞬間">
       <img src="004.jpg" alt="film 04"/>
-      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring</span></div>
+      <div class="cell-ov"><span class="cell-num">004</span><span class="cell-info">Kodak Portra 400 — Spring
+午後の光が彼を選んだ瞬間</span></div>
     </div>
-    <div class="cell" data-caption="Kodak Portra 400 — Spring|視線の先で春が横切る、流れる水音の中で">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring
+水に流れていく春
+悲しいのか寂しいのか、でも綺麗だった">
       <img src="003.jpg" alt="film 03"/>
-      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring|視線の先で春が横切る、流れる水音の中で</span></div>
+      <div class="cell-ov"><span class="cell-num">003</span><span class="cell-info">Kodak Portra 400 — Spring
+水に流れていく春
+悲しいのか寂しいのか、でも綺麗だった</span></div>
     </div>
   </div>
 
   <!-- row-c: 002 -->
   <div class="row row-c">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring|枝垂れる桜の中、頬で春を感じた">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring
+枝垂れる桜の中、頬で春を感じた">
       <img src="002.jpg" alt="film 02"/>
-      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring|枝垂れる桜の中、頬で春を感じた</span></div>
+      <div class="cell-ov"><span class="cell-num">002</span><span class="cell-info">Kodak Portra 400 — Spring
+枝垂れる桜の中、頬で春を感じた</span></div>
     </div>
   </div>
 
   <!-- row-c: 001 -->
   <div class="row row-c">
-    <div class="cell" data-caption="Kodak Portra 400 — Spring|雨上がり、桜並木を歩いた日">
+    <div class="cell" data-caption="Kodak Portra 400 — Spring
+雨上がり、桜並木を歩いた日">
       <img src="001.jpg" alt="film 01"/>
-      <div class="cell-ov"><span class="cell-num">001</span><span class="cell-info">Kodak Portra 400 — Spring|雨上がり、桜並木を歩いた日</span></div>
+      <div class="cell-ov"><span class="cell-num">001</span><span class="cell-info">Kodak Portra 400 — Spring
+雨上がり、桜並木を歩いた日</span></div>
     </div>
   </div>
 </section>
@@ -538,10 +549,15 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
     <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="007.jpg" alt="s7"/><span class="strip-num">007</span></div>
     <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="006.jpg" alt="s6"/><span class="strip-num">006</span></div>
     <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="005.jpg" alt="s5"/><span class="strip-num">005</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring"><img src="004.jpg" alt="s4"/><span class="strip-num">004</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring|水に流れていく春|悲しいのか寂しいのか、でも綺麗だった"><img src="003.jpg" alt="s3"/><span class="strip-num">003</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring|枝垂れる桜の中、頬で春を感じた"><img src="002.jpg" alt="s2"/><span class="strip-num">002</span></div>
-    <div class="strip-item" data-caption="Kodak Portra 400 — Spring|雨上がり、桜並木を歩いた日"><img src="001.jpg" alt="s1"/><span class="strip-num">001</span></div>
+    <div class="strip-item" data-caption="Kodak Portra 400 — Spring
+午後の光が彼を選んだ瞬間"><img src="004.jpg" alt="s4"/><span class="strip-num">004</span></div>
+    <div class="strip-item" data-caption="Kodak Portra 400 — Spring
+水に流れていく春
+悲しいのか寂しいのか、でも綺麗だった"><img src="003.jpg" alt="s3"/><span class="strip-num">003</span></div>
+    <div class="strip-item" data-caption="Kodak Portra 400 — Spring
+枝垂れる桜の中、頬で春を感じた"><img src="002.jpg" alt="s2"/><span class="strip-num">002</span></div>
+    <div class="strip-item" data-caption="Kodak Portra 400 — Spring
+雨上がり、桜並木を歩いた日"><img src="001.jpg" alt="s1"/><span class="strip-num">001</span></div>
   </div>
 </section>
 
@@ -630,7 +646,7 @@ function openLb(i){
   cur=i;
   scrollPos=getScrollPosForItem(cur);
   lbImg.src=img.src;
-  lbCap.innerHTML=items[i].dataset.caption.replace(/\|/g,'<br/>')||'';
+  lbCap.textContent=items[i].dataset.caption||'';
   lb.classList.add('open');
   document.body.classList.add('lb-open');
   document.body.style.top=-scrollPos+'px';
@@ -657,7 +673,7 @@ document.getElementById('lb-prev').addEventListener('click',e=>{
   cur=(cur-1+items.length)%items.length;
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
-  lbCap.innerHTML=items[cur].dataset.caption.replace(/\|/g,'<br/>')||'';
+  lbCap.textContent=items[cur].dataset.caption||'';
 });
 
 document.getElementById('lb-next').addEventListener('click',e=>{
@@ -665,7 +681,7 @@ document.getElementById('lb-next').addEventListener('click',e=>{
   cur=(cur+1)%items.length;
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
-  lbCap.innerHTML=items[cur].dataset.caption.replace(/\|/g,'<br/>')||'';
+  lbCap.textContent=items[cur].dataset.caption||'';
 });
 
 document.addEventListener('keydown',e=>{
@@ -675,13 +691,13 @@ document.addEventListener('keydown',e=>{
     cur=(cur-1+items.length)%items.length;
     const img=items[cur].querySelector('img');
     lbImg.src=img.src;
-    lbCap.innerHTML=items[cur].dataset.caption.replace(/\|/g,'<br/>')||'';
+    lbCap.textContent=items[cur].dataset.caption||'';
   }
   if(e.key==='ArrowRight'){
     cur=(cur+1)%items.length;
     const img=items[cur].querySelector('img');
     lbImg.src=img.src;
-    lbCap.innerHTML=items[cur].dataset.caption.replace(/\|/g,'<br/>')||'';
+    lbCap.textContent=items[cur].dataset.caption||'';
   }
 });
 
@@ -693,7 +709,7 @@ lb.addEventListener('touchend',e=>{
   if(d<0){cur=(cur+1)%items.length}else{cur=(cur-1+items.length)%items.length}
   const img=items[cur].querySelector('img');
   lbImg.src=img.src;
-  lbCap.innerHTML=items[cur].dataset.caption.replace(/\|/g,'<br/>')||'';
+  lbCap.textContent=items[cur].dataset.caption||'';
   setTimeout(()=>{isSwiping=false;},300);
 });
 
