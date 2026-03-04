@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>shoyoshizumi.com</title>
+<title>The days, the record. — SHO YOSHIZUMI</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -341,7 +341,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 
 #lb-viewer{
   position:fixed;
-  top:40%;
+  top:50%;
   left:50%;
   transform:translate(-50%, -50%);
   width:85vw;
@@ -364,7 +364,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 
 #lb-img{
   max-width:100%;
-  max-height:55vh;
+  max-height:50vh;
   object-fit:contain;
   filter:grayscale(5%) contrast(1.06);
   display:block;
@@ -373,7 +373,7 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 #lb-title{
   width:100%;
   text-align:center;
-  margin-top:16px;
+  margin-top:12px;
   padding:0 12px;
 }
 
@@ -767,7 +767,7 @@ function updateLbContent(i) {
   
   // 最初の1行がタイトル（フィルム名 — 季節）
   const titleLine = lines[0];
-  // 残りがコメント
+  // 残りがコメント全体
   const commentLines = lines.slice(1).join('\n').trim();
   
   lbImg.src = items[i].querySelector('img').src;
