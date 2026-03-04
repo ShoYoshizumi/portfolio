@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The days, the record. — SHO YOSHIZUMI</title>
+<title>shoyoshizumi.com</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -341,16 +341,25 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 
 #lb-viewer{
   position:fixed;
-  top:45%;
+  top:40%;
   left:50%;
   transform:translate(-50%, -50%);
   width:85vw;
   max-width:500px;
   height:auto;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   z-index:9;
+}
+
+#lb-img-container{
+  position:relative;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 #lb-img{
@@ -358,6 +367,22 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   max-height:55vh;
   object-fit:contain;
   filter:grayscale(5%) contrast(1.06);
+  display:block;
+}
+
+#lb-title{
+  width:100%;
+  text-align:center;
+  margin-top:16px;
+  padding:0 12px;
+}
+
+#lb-title-text{
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dim);
 }
 
 #lb-prev,#lb-next{
@@ -425,7 +450,12 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
   <div id="lb-wrapper">
     <button id="lb-close">[ CLOSE ]</button>
     <div id="lb-viewer">
-      <img id="lb-img" src="" alt=""/>
+      <div id="lb-img-container">
+        <img id="lb-img" src="" alt=""/>
+        <div id="lb-title">
+          <span id="lb-title-text"></span>
+        </div>
+      </div>
     </div>
     <div id="lb-meta">
       <span id="lb-cap"></span>
@@ -731,12 +761,25 @@ function getScrollPosForItem(idx) {
   return Math.max(0, itemScrollPos);
 }
 
+function updateLbContent(i) {
+  const caption = items[i].dataset.caption || '';
+  const lines = caption.split('\n');
+  
+  // 最初の1行がタイトル（フィルム名 — 季節）
+  const titleLine = lines[0];
+  // 残りがコメント
+  const commentLines = lines.slice(1).join('\n').trim();
+  
+  lbImg.src = items[i].querySelector('img').src;
+  document.getElementById('lb-title-text').textContent = titleLine;
+  lbCap.textContent = commentLines;
+}
+
 function openLb(i){
   const img=items[i].querySelector('img');if(!img)return;
   cur=i;
   scrollPos=getScrollPosForItem(cur);
-  lbImg.src=img.src;
-  lbCap.textContent=items[i].dataset.caption||'';
+  updateLbContent(cur);
   lb.classList.add('open');
   document.body.classList.add('lb-open');
   document.body.style.top=-scrollPos+'px';
@@ -761,17 +804,13 @@ lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
 document.getElementById('lb-prev').addEventListener('click',e=>{
   e.stopPropagation();
   cur=(cur-1+items.length)%items.length;
-  const img=items[cur].querySelector('img');
-  lbImg.src=img.src;
-  lbCap.textContent=items[cur].dataset.caption||'';
+  updateLbContent(cur);
 });
 
 document.getElementById('lb-next').addEventListener('click',e=>{
   e.stopPropagation();
   cur=(cur+1)%items.length;
-  const img=items[cur].querySelector('img');
-  lbImg.src=img.src;
-  lbCap.textContent=items[cur].dataset.caption||'';
+  updateLbContent(cur);
 });
 
 document.addEventListener('keydown',e=>{
@@ -779,15 +818,11 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape')closeLb();
   if(e.key==='ArrowLeft'){
     cur=(cur-1+items.length)%items.length;
-    const img=items[cur].querySelector('img');
-    lbImg.src=img.src;
-    lbCap.textContent=items[cur].dataset.caption||'';
+    updateLbContent(cur);
   }
   if(e.key==='ArrowRight'){
     cur=(cur+1)%items.length;
-    const img=items[cur].querySelector('img');
-    lbImg.src=img.src;
-    lbCap.textContent=items[cur].dataset.caption||'';
+    updateLbContent(cur);
   }
 });
 
@@ -797,9 +832,7 @@ lb.addEventListener('touchend',e=>{
   const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)<40)return;
   isSwiping=true;
   if(d<0){cur=(cur+1)%items.length}else{cur=(cur-1+items.length)%items.length}
-  const img=items[cur].querySelector('img');
-  lbImg.src=img.src;
-  lbCap.textContent=items[cur].dataset.caption||'';
+  updateLbContent(cur);
   setTimeout(()=>{isSwiping=false;},300);
 });
 
