@@ -35,7 +35,7 @@ nav{
   background:rgba(5,5,5,.88);backdrop-filter:blur(18px);
   border-bottom:1px solid var(--b);
 }
-.nav-logo{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--w);text-decoration:none;white-space:nowrap}
+.nav-logo{text-decoration:none;display:inline-block;line-height:1}
 .nav-logo i{font-style:normal;color:var(--dim)}
 .nav-links{display:flex;gap:0;align-items:center}
 .nav-links a{font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .2s;white-space:nowrap;padding:0 8px}
@@ -465,7 +465,9 @@ footer{padding:18px 28px;display:flex;justify-content:space-between;flex-wrap:wr
 </div>
 
 <nav>
-  <a class="nav-logo" href="#">SHO YOSHIZUMI</a>
+  <a class="nav-logo" href="#">
+    <img src="phonto.jpeg" alt="SHO YOSHIZUMI" style="height:24px;width:auto;"/>
+  </a>
   <div class="nav-links">
     <a href="#works-anchor">FILM ROLLS</a>
     <span class="nav-sep">|</span>
